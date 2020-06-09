@@ -1,0 +1,119 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+Cart
+{% endblock %}
+
+{% block content %}
+  <!-- Empty Cart -->
+<!-- ========================================================== -->
+  {% if not cart_items %}
+    <div class="text-center">
+      <br>
+      <h1 class="text-center product_title">
+        Your shopping cart is empty
+      </h1>
+      <br>
+      <p class="text-center">
+        Please click <a href="{% url 'index' %}">here</a> to continue shopping
+      </p>
+    </div>
+
+      <!-- Full Cart -->
+<!-- ======================================================================= -->
+  {% else %}
+  <!-- <div class="text-center">
+    <br>
+    <div class="text-center product_title">
+      Your shopping cart
+    </div>
+  </div> -->
+  <div class="row mx-auto">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+      <table class="table cart_table">
+        <thead class="cart_thead">
+          <tr>
+            <th colspan="4">
+            Товары
+            </th>
+          </tr>
+        </thead>
+
+          <!-- CartItems -->
+<!-- ================================================================== -->
+        {% for cart_item in cart_items %}
+          <tr>
+            <td>
+              <!-- {% if cart_item.product %} -->
+              <a href="{{cart_item.get_url}}">
+                <img src="{{cart_item.image.url}}" width="100" height="100" alt="">
+              </a>
+
+              
+            </td>
+            <td class="text-left">
+              <br>
+              SKU: {{cart_item.product}}
+              <br>
+              Unit Price: ${{cart_item.price}}
+              <br>
+              Qty: {{cart_item.quantity}} x {{cart_item.price}}
+            </td>
+            <td>
+              {{cart_item.sub_total}}&nbsp; руб.
+            </td>
+            {% else %}
+            
+            {% endif %}
+
+
+    <!-- Adding/removing quntity
+============================================================             -->
+            {% if cart_item.quantity < cart_item.product.stock %}
+            <td>
+              &nbsp;<a href="{% url 'add_cart' cart_item.product.id %}"><i class="fas fa-plus-circle cart_icon"><h1>+</h1>  </i></a>
+             
+            </td>
+            {% else %}
+            <td>
+            </td>
+            {% endif %}
+          </tr>
+        {% endfor %}
+      </table>
+    </div>
+<!-- ===================================================================== -->   
+
+    <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+      <table class="table cart_table">
+        <thead class="cart_thead">          
+            <tr>
+              <td class="text-left">
+                Всего товаров на сумму: <strong>{{new_total}}&nbsp;руб.</strong>
+              </td>
+            </tr>
+              <tr>
+              <td class="text-left">
+                Общее кол-во наименований: <strong>{{counter}}&nbsp;шт.</strong>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <!-- <a href="{% url 'order_create' %}" class="btn btn-primary">Купить</a> -->
+                <a href="{% url 'delivery' %}" class="btn btn-primary">Заказать</a>
+              </td>
+            </tr>
+        </table>
+
+        <!-- Continue Shopping -->
+<!-- ========================================================= -->
+          <a href="{% url 'index' %}" style="text-decoration: none;">
+            <button type="button" class="btn btn-lg btn-block bg-dark text-white">
+              Продолжить покупки
+            </button>
+          </a><br>
+        </div>
+    </div>
+  </div>
+  {% endif %}
+{% endblock %}

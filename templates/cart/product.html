@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container py-3">
+  <div class="row">
+      <div class="col-sm-4">
+        <div class="card" style="width: 25rem;">
+          <!-- <img src="{{product.image.url}}" class="card-img-top" alt="No Image Available"> -->
+          <img src="{{product.image.url}}" width="250" alt="No Image Available">
+          <!-- <img src="{{product.image.url}}" class="img-fluid" alt="No Image Available"> -->
+          <div class="card-body">
+            <h5 class=card-title>{{product.model_name}}</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            {% if product.stock <= 0 %}
+              <p class="text-justify product_text"><b>Out of Stock</b></p>
+            {% else %}
+            <a href="{% url 'add_cart' product.slug %}">
+              <button type="button" name="button" class="btn btn-primary">
+                Add to Cart
+              </button>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    
+      <div class="col-sm-8">
+      <div>
+        <h1 class="product_title">{{product.model_name}}</h1>
+        <h5 class="text-info font-italic mb-3">
+          <span class="mr-1"></span> {{product.price}}руб.
+        </h5>
+        <p class="product_description">Product Description</p>
+        <p class="text-justify product_text">{{product.description}}</p>
+        <p class="text-justify product_text">{{product.slug}}</p>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-center">
+      <div class="col-6">
+      <h1>Аксессуары для товара</h1>
+      </div>
+    </div>
+
+    <div class="row">
+      {% for accs in accessories %}
+      <div class="col-3">
+        {{accs.name}}
+        id = {{accs.id}}
+        <a href="{% url 'accessory_detail' accs.id %}">
+          <img src="{{accs.image.url}}" width='100' alt="{accs.name}}">
+        </a>
+      </div>
+        {% endfor %}
+    </div> 
+
+    </div>
+  </div>
+
+  <div class="card">
+  <div class="card-header">
+    <h4>Reviews</h4>
+  </div>
+  {% if user.is_authenticated %}
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea name="content" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+      <button type="submit" class="btn btn-success">Post</button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+
+  {% if reviews.count > 0 %}
+  <ul class="list-group list-group-flush">
+   {% for review in reviews %}
+       <li class="list-group-item"> <h5>{{review.user.username}}</h5>
+       <p class="card-text">{{review.content}}</p>
+       </li>
+   {% endfor %}
+ </ul>
+
+  {% endif %}
+
+</div>
+
+{% endblock %}

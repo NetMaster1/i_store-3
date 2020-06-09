@@ -1,0 +1,105 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="py-4">
+    <div class="container">
+      <div class="row">
+        <div class="col-10 mx-auto my-2 text-center">
+
+    <form action="{% url 'search' %}">
+
+      <input type="text" name='model' class='form-control' placeholder='Model'>
+
+      <select name='brand' class='form-control'>
+        <option selected='true' disabled='disabled'>Brand</option>
+        {% for key, value in brand_choices.items %}
+          <option value="{{key}}">{{value}}</option>
+        {% endfor %}
+      </select>
+
+      <select name='price' class='form-control'>
+        <option selected='true' disabled='disabled' >Price</option>
+        {% for key, value in price_choices.items %}
+          <option value="{{key}}">{{value}}</option>
+        {% endfor %}
+    
+      </select>
+      <select name='battery' class='form-control'>
+        <option selected='true'disabled='disabled'>Battery</option>
+        {% for key, value in battery_choices.items %}
+          <option value="{{key}}">{{value}}</option>
+        {% endfor %}
+      </select>
+ 
+      <!-- <select>
+      <option value="volvo">Volvo</option>
+      <option value="saab">Saab</option>
+      <option value="opel">Opel</option>
+      <option value="audi">Audi</option>
+      </select> -->
+      <!-- <button type="button" name="button" class="btn btn-primary"> -->
+          
+      <input type="submit" value="Submit"class="btn btn-primary col-12 mx-auto my-2 text-center"> 
+    
+  </form>
+</div>
+
+    </div>
+        </div>
+            </div>
+            <div class="col-10 mx-auto my-2 text-center"><h1>Search Page</h1></div>
+
+  <!-- Breadcrumb -->
+  <section id="bc" class="mt-3">
+    <div class="container">
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item">
+            <a href="{% url 'index' %}">
+              <i class="fas fa-home"></i> Home</a>
+          </li>
+          <li class="breadcrumb-item active"> Browse Listings</li>
+        </ol>
+      </nav>
+    </div>
+  </section>
+<!-- ========================================================= -->
+  <!-- Listings -->
+  <section id="listings" class="py-4">
+    <div class="container">
+      <div class="row">
+
+        {% if  products %}
+        {% for product in products %}
+        <div class="col-9 mx-auto col-md-6 col-lg-3">
+          <div class="card mb-4" style="border-color: transparent;">
+            <div class="p-4">
+            <!-- =============================================== -->
+              <a href="{{product.get_url}}">
+                <img src="{{product.image.url}}" class="card-img-top" alt="{{product.name}}">
+              </a>
+            <!-- =========================================================== -->
+            </div>
+            <div class="card-footer d-flex justify-content-between"
+            style="background: transparent; border-color: transparent;">
+              <p class="font-weight-bold mb-0">
+                {{product.name}}
+              </p>
+              <h5 class="text-info font-italic mb-0">
+                <span class="mr-1">$</span> {{product.price}}
+              </h5>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+        {% else %}
+            <div class="col-md-12">
+                <p>No products available</p>
+            </div>
+        {% endif %}
+      </div>
+
+
+{% endblock %}

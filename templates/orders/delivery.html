@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>This is a delivery page</h1>
+<form action="{% url 'choice' %}">
+<div>
+  <label for="delivery">Доставка</label><br>
+  <input type="radio" name="delivery" value="address" id="delivery">Доставка по адресу<br>
+  <input type="radio" name="delivery" value="office" id="delivery">Самовывоз
+</div>
+<!-- <a href="{% url 'choice' %}" class="btn btn-primary">Купить</a> -->
+<input type="submit" value="Submit"class="btn btn-primary">
+</form>
+{% endblock %}

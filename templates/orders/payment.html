@@ -1,0 +1,16 @@
+{% extends 'base.html'%}
+{% load static %}
+{% block content %}
+<h1>Thank you for your order</h1>
+<h1>Please, choose your pament method</h1>
+
+<form action="{% url 'payment_choice' %}">
+    <div>
+      <label for="payment">Доставка</label><br>
+      <input type="radio" name="payment" value="credit" id="payment">Credit Card<br>
+      <input type="radio" name="payment" value="cash" id="payment">Платеж при получении
+    </div>
+    <input type="submit" value="Submit"class="btn btn-primary">
+</form>
+
+{% endblock%}

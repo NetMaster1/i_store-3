@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- <input type="search" placeholder="Search" aria-label="Search" name="search" > -->
+
+<!-- Checkboxes -->
+<!-- ===================================================== -->
+<div class="container">
+  <div class="row">
+    <div class="col-sm-2">
+      <form action="{% url 'search' %}">
+        <div>
+          <ul>
+          <li><label for="manufacture">Производитель</label></li>
+          <li><input type="checkbox" id="manufacture" name="manufacture" value="Samsung">Samsung </li>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Honor">Honor <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Huawei">Huawei <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Apple">Apple <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Xiaomi">Xiaomi <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Sony">Sony <br>
+          <input type="submit" value="Submit"class="btn btn-primary">
+        </div>
+      </ul>
+      </form>
+    </div>
+      <!-- Listing products -->
+<!-- ==================================================================================== -->
+      {% for product in products %}
+      <!-- <div class="col-10 mx-auto col-md-6 col-lg-3"> -->
+        <div class="col-sm-2">
+        <div class="card mb-4" style="border-color: transparent;">
+          <div class="p-4">
+       
+            <a href="{{product.get_url}}">
+              <img src="{{product.image.url}}" class="img-fluid" alt="{{product.model_name}}">
+              <!-- <img src="{{product.image.url}}" class="card-img-top" alt="{{product.model_name}}"> -->
+            </a>
+          <!-- =========================================================== -->
+          </div>
+
+          <div class="card-footer d-flex justify-content-between"
+          style="background: transparent; border-color: transparent;">
+            <p class="font-weight-bold mb-0">
+              {{product.name}}
+            </p>
+            <h5 class="text-info font-italic mb-0">
+              <span class="mr-1"></span> {{product.price}} руб.
+            </h5>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Paginator -->
+<!-- ===================================================================== -->
+    <div class="col-10 mx-auto my-2 text-center">
+      {% if products.paginator.num_pages > 1 %}
+          {% for page_number in products.paginator.page_range %}
+              <a href="?page={{page_number}}"
+               class="btn btn-light btn-sm {% if products.number == page_number %}active{% endif %}">
+               {{page_number}}</a>
+          {% endfor %}
+      {% endif %}
+    </div>
+    <br>
+  </div>
+
+{% endblock %}

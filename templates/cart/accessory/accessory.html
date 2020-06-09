@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container py-5">
+  <div class="row mt-5">
+
+      <!-- Single Product -->
+    <!-- ========================================================= -->
+    <div class="col-10 mx-auto col-md-6 my-3">
+
+      <img src="{{accessory.image.url}}" alt="No Image Available">
+      
+
+    </div>
+    <div class="col-10 mx-auto col-md-6 my-3">
+      <div>
+        <h1 class="product_title">{{accessory.model_name}}</h1>
+        <h5 class="text-info font-italic mb-3">
+          <!-- <span class="mr-1"></span> {{product.price}}руб.
+        </h5>
+        <p class="product_description">Product Description</p>
+        <p class="text-justify product_text">{{product.description}}</p> -->
+
+
+
+
+        <!-- <h1>Аксессуары для товара</h1>
+        {% for accs in accessories %}
+          {{accs.name}}
+        <img src="{{accs.image.url}}" alt="">
+
+          <a href="{{acces.get_url}}">
+            <img src="{{accs.image.url}}" width="100" height="100" alt="{accs.name}}">
+          </a>
+
+          
+        {% endfor %} -->
+
+        {% if product.stock <= 0 %}
+        <p class="text-justify product_text"><b>Out of Stock</b></p>
+        {% else %}
+
+
+ <!-- Кнопка добавления в корзину -->
+<!-- ============================================================================== -->
+<a href="{% url 'add_cart' accessory.slug %}">
+  <button type="button" name="button" class="btn btn-primary">
+    Добавить в корзину
+  </button>
+  </a>
+<!-- ============================================================================ -->
+        {% endif %}
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+  <div class="card-header">
+    <h4>Reviews</h4>
+  </div>
+  {% if user.is_authenticated %}
+  <div class="card-body">
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        <textarea name="content" class="form-control"></textarea>
+      </div>
+      <div class="form-group">
+      <button type="submit" class="btn btn-success">Post</button>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+
+  {% if reviews.count > 0 %}
+  <ul class="list-group list-group-flush">
+   {% for review in reviews %}
+       <li class="list-group-item"> <h5>{{review.user.username}}</h5>
+       <p class="card-text">{{review.content}}</p>
+       </li>
+   {% endfor %}
+ </ul>
+
+  {% endif %}
+
+
+</div>
+
+</div>
+
+
+{% endblock %}
+
+
+
+
+</div>
+
+</div>
+
+

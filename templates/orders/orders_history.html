@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<body>
+  
+
+<!-- Alerts -->
+{% include 'partials/_alerts.html' %}
+
+{% if user.is_authenticated %}
+          <h1>Это история ваших заказов</h1>
+          <table class='table table-stripped'>
+            <thead>
+              <tr>
+                <th>Номер заказа</th>
+                <th>Дата заказа</th>
+                <th>Стоимость заказа</th>
+                <th>Статус</th>
+                <th>Действие</th>
+              </tr>
+            </thead>
+            
+            {% if order_details %}
+            {% for order in order_details %}
+            <tr>
+              <td>{{order.first_name}}</td>
+              <!-- <td>{{order.created}}</td> -->
+              <!-- <td>{{order.total}}</td> -->
+              <td><i class="fas fa-check"></i></td>
+              <td><a href="">Заказ детально</a></td>
+            </tr>
+            {% endfor %}
+          </table>
+          {% else %}
+          <h1>У вас не было заказов</h1>
+          {% endif %}
+        {% endif %}
+          
+          <table class="table">
+            
+          </table>
+
+
+        </div>
+      </div>
+    </div>
+  <!-- </section> -->
+
+  
+</body>
+
+
+{% endblock %}
