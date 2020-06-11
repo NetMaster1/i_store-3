@@ -1,0 +1,1 @@
+web: gunicorn pr_dir.wsgi
