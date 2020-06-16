@@ -91,7 +91,7 @@ WSGI_APPLICATION = 'pr_dir.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'i_store_3',
         'USER': 'postgres',
         'PASSWORD': 'ylhio65v',
