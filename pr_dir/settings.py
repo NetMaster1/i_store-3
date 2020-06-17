@@ -95,8 +95,8 @@ DATABASES = {
         'NAME': 'i_store_4',
         'USER': 'postgres',
         'PASSWORD': 'ylhio65v',
-        'HOST': 'localhost',
-        'PORT': '5432'
+        # 'HOST': 'localhost',
+        # 'PORT': '5432'
     }
 }
 
