@@ -132,13 +132,6 @@ USE_TZ = True
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL ='/media/'
 
-EMAIL_HOST= 'smtp.yandex.ru' #smtp.gmail.com
-EMAIL_PORT= 587
-EMAIL_HOST_USER='79200711112@yandex.ru'
-EMAIL_HOST_PASSWORD = '39aZifol_01'
-EMAIL_USE_TLS = True
-EMAIL_USE_SSL = False
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 STATIC_ROOT=os.path.join(BASE_DIR, 'static')
