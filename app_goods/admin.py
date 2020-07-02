@@ -4,11 +4,12 @@ from .models import Product, Cart, CartItem, Brand, Category, Accessory
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'brand', 'model_name')
     prepopulated_fields = {'slug': ('model_name','colour','ram' )}
+    list_filter = ('brand', 'model_name' )#creates a filter at the side panel
 
 class AccessoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name',)
     prepopulated_fields = {'slug': ('name','link')}
-
+    
 class CategoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     prepopulated_fields = {'slug': ('name',)}
