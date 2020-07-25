@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '9=mm!b69r4d+*5-p)xd_47ei6-np82s(9ba4&#6z+bulph!ojv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '178.128.154.158', 'www.evvy.ru', 'evvy.ru']
 
 
 # Application definition
