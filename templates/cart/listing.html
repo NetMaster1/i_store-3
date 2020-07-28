@@ -8,7 +8,7 @@
 <!-- ===================================================== -->
 <div class="container">
   <div class="row">
-    <div class="col-sm-2">
+    <div class="col-sm-3">
       <form action="{% url 'search' %}">
         <div>
           <ul>
@@ -24,33 +24,43 @@
       </ul>
       </form>
     </div>
+
       <!-- Listing products -->
 <!-- ==================================================================================== -->
-      {% for product in products %}
-      <!-- <div class="col-10 mx-auto col-md-6 col-lg-3"> -->
-        <div class="col-sm-2">
-        <div class="card mb-4" style="border-color: transparent;">
-          <div class="p-4">
-       
+<div class="col-9">
+     <div class="container">
+       <br>
+       <div class="row">
+        {% for product in products %}
+        <div class="col-4 border text-primary">
+          <p><h5>{{product.brand}} {{product.model_name}} {{product.hdd}}/{{product.ram}}Gb</h4></p>
             <a href="{{product.get_url}}">
-              <img src="{{product.image.url}}" class="img-fluid" alt="{{product.model_name}}">
-              <!-- <img src="{{product.image.url}}" class="card-img-top" alt="{{product.model_name}}"> -->
+              <div class="text-center">
+              <img src="{{product.image.url}}"  width=130 alt="{{product.model_name}}">
+              </div>
             </a>
-          <!-- =========================================================== -->
-          </div>
+          <p><h4>{{product.price}} руб.</h4></p>
 
-          <div class="card-footer d-flex justify-content-between"
-          style="background: transparent; border-color: transparent;">
-            <p class="font-weight-bold mb-0">
-              {{product.name}}
-            </p>
-            <h5 class="text-info font-italic mb-0">
-              <span class="mr-1"></span> {{product.price}} руб.
-            </h5>
-          </div>
+          {% if product.stock <= 0 %}
+          <p class="text-justify product_text"><b>Out of Stock</b></p>
+          {% else %}
+            <a href="{% url 'add_cart' product.slug %}">  
+            <button type="button" name="button" class="btn btn-primary btn-block">
+            Купить
+            </button>
+            <br>
+            </a>
+          {% endif %}
         </div>
-      </div>
-      {% endfor %}
+        {% endfor %}
+       </div>
+     </div>
+  </div>
+     
+           
+<!-- =========================================================== -->
+    
+    
     </div>
 
     <!-- Paginator -->
@@ -65,6 +75,6 @@
       {% endif %}
     </div>
     <br>
-  </div>
+</div>
 
 {% endblock %}

@@ -24,9 +24,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '9=mm!b69r4d+*5-p)xd_47ei6-np82s(9ba4&#6z+bulph!ojv'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '178.128.154.158', 'www.evvy.ru', 'evvy.ru']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '178.128.154.158', 'www.evvy.ru', 'evvy.ru']
 
 
 # Application definition
@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'app_accounts',
     'app_orders',
     'app_emails',
+    'app_reviews',
+    'app_contacts'
 ]
 
 MIDDLEWARE = [

@@ -5,7 +5,15 @@ from . choices import brand_choices, price_choices, battery_choices
 from django.db.models import Q
 
 def index(request):
-    return render (request, 'index.html', {})
+    products=Product.objects.all()
+    context = {
+        #'category': category_page,
+        'products': products,
+        # 'brand_choices': brand_choices,
+        # 'price_choices': price_choices,
+        # 'battery_choices': battery_choices,
+        }
+    return render (request, 'index.html', context)
 
     # Products listing functions
 # ======================================
@@ -28,7 +36,7 @@ def listing (request):
     return render (request, 'cart/listing.html',context )
 
 def listing_smartphone (request):
-    products=Product.objects.filter(category=1)
+    products=Product.objects.filter(category=2)
     context = {
         'products': products,
         }
