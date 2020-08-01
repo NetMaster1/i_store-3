@@ -43,29 +43,26 @@
     </div>
   </div>
 
-  <div class="row">
+  <div class="row" >
     {% for product in products %}
-    <div class="col-3 border text-primary">
-      
-    <div class="row">
-      <div class="col">
-      <p><h5>{{product.brand}} {{product.model_name}}  {{product.hdd}}/{{product.ram}}Gb</h4></p>
-      </div>
+    <div class="col-3 border text-primary" >
+      <div class="row align-items-start justify-content-center" style="height:80px" >
+        <!-- <div class="col"> -->
+      <h5>{{product.brand}} {{product.model_name}}<br> {{product.hdd}}/{{product.ram}}Gb</h5>
+      <!-- </div>   -->
     </div>
 
-    <div class="row">
-      <div class="col">
+    <div class="row align-items-center justify-content-center" style="height:270px" >
+      <!-- <div class="col"> -->
       <a href="{{product.get_url}}">
-          <div class="text-center">
           <img src="{{product.image.url}}"  width=130 alt="{{product.model_name}}">
-          </div>
         </a>
-      </div>  
-    </div>
+      </div>
+    <!-- </div> -->
 
-    <div class="row">
-      <div class="col">
-      <p><h4>{{product.price}} руб.</h4></p>
+    <div class="row align-items-center justify-content-left" style="height:120px" >
+        <div class="col">
+      <h4>{{product.price}} руб.</h4>
       {% if product.stock <= 0 %}
       <p class="text-justify product_text"><b>Out of Stock</b></p>
       {% else %}
@@ -73,14 +70,14 @@
         <button type="button" name="button" class="btn btn-primary btn-block">
         Купить
         </button>
-        <br>
         </a>
-        </div>
-    </div> 
       {% endif %}
-  </div>
-    {% endfor %}      
+        </div>
     </div>
+    </div>
+      {% endfor %} 
+    
+  
+  </div>
 </div>
-
 {% endblock %}
