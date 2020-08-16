@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- <input type="search" placeholder="Search" aria-label="Search" name="search" > -->
+
+<!-- Checkboxes -->
+<!-- ===================================================== -->
+<div class="container">
+    <div class="row mt-4 pt-5">
+        <div class="col-3">
+            <form action="{% url 'search_sim' %}">
+                {% csrf_token %}
+                <ul>
+                    <div>
+                        <ul>
+                            <li><label for="manufacture">Производитель</label></li>
+                            <input type="checkbox" id="manufacture" name="manufacture" value="Samsung"> Samsung <br>
+                            <input type="checkbox" id="manufacture" name="manufacture" value="Honor"> Honor <br>
+                            <input type="checkbox" id="manufacture" name="manufacture" value="Huawei"> Huawei <br>
+                            <input type="checkbox" id="manufacture" name="manufacture" value="Apple"> Apple <br>
+                            <input type="checkbox" id="manufacture" name="manufacture" value="Xiaomi"> Xiaomi <br>
+                            <input type="checkbox" id="manufacture" name="manufacture" value="Sony"> Sony <br>
+
+                    </div>
+                </ul>
+                <ul>
+                    <div>
+                        <ul>
+                            <li><label for="price">Цена</label></li>
+                            <input type="checkbox" id="price" name="price" value="5000.00"> 5000 <br>
+                            <input type="checkbox" id="price" name="price" value="7000.00"> 7000 <br>
+                            <input type="checkbox" id="price" name="price" value="9000.00"> 9000 <br>
+                            <input type="checkbox" id="price" name="price" value="18000.00"> 18000 <br>
+
+                    </div>
+                </ul>
+                <ul>
+                    <div>
+                        <ul>
+                            <li><label for="ram">Оперативная память</label></li>
+                            <input type="checkbox" id="ram" name="ram" value="1"> 1 <br>
+                            <input type="checkbox" id="ram" name="ram" value="2"> 2 <br>
+                            <input type="checkbox" id="ram" name="ram" value="3"> 3 <br>
+                            <input type="checkbox" id="ram" name="ram" value="4"> 4 <br>
+
+                    </div>
+                </ul>
+                <input type="submit" value="Применить" class="btn btn-danger btn-block">
+            </form>
+        </div>
+
+        <!-- Listing products -->
+        <!-- ==================================================================================== -->
+        <div class="col-9">
+            <div class="row">
+                {% for product in queryset_list %}
+                <div class="col-4 border text-danger">
+                    <div class="row align-items-start justify-content-center" style="height:80px">
+                        <h5>{{product.brand}} {{product.model_name}} {{product.color}}<br>
+                            {{product.ram}}/{{product.hdd}}Gb</h5>
+                    </div>
+                    <div class="row align-items-center justify-content-center" style="height:270px">
+                        <a href="{{product.get_url}}">
+                            <div class="text-center">
+                                <img src="{{product.image.url}}" width=130 alt="{{product.model_name}}">
+                            </div>
+                        </a>
+                    </div>
+                    <div class="row align-items-center justify-content-center" style="height:120px">
+                        <div class="col">
+                            <p>
+                            <h4>{{product.price}} руб.</h4>
+                            </p>
+                            {% if product.stock <= 0 %}
+                            <p class="text-justify product_text"><b>Out of Stock</b></p>
+                            {% else %}
+                            <a href="{% url 'add_cart' product.slug %}">
+                                <button type="button" name="button" class="btn btn-danger btn-block">
+                                    Купить
+                                </button>
+                                <br>
+                            </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Paginator -->
+    <!-- ===================================================================== -->
+    <div class="col-10 mx-auto my-2 text-center">
+        {% if products.paginator.num_pages > 1 %}
+        {% for page_number in products.paginator.page_range %}
+        <a href="?page={{page_number}}"
+            class="btn btn-light btn-sm {% if products.number == page_number %}active{% endif %}">
+            {{page_number}}</a>
+        {% endfor %}
+        {% endif %}
+    </div>
+    <br>
+</div>
+
+{% endblock %}

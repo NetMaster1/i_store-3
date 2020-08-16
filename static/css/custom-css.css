@@ -1,8 +1,10 @@
 /* . is for classes*/
 /* # is for divs */
 
-.vertalign {
-    position: relative;
-    bottom: bottom;
-    background-color: red;
+
+.g_font {
+  font-family: 'Permanent Marker', cursive;
 }
+
+
+   

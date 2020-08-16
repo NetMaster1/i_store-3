@@ -1,16 +1,7 @@
 /* . is for classes*/
 /* # is for divs */
 
-.vertalign {
-  
-    background-color: red;
-    /* margin: auto; */
-    padding: 1rem;
-    /* text-align: center; */
+.g_font {
+    font-family: 'Lobster', cursive;
+    font-size: 3rem;
 }
-
-#flex_align {
-    display: flex;
-    
-}
-

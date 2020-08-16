@@ -17,7 +17,7 @@
 
   <div class="row">
     <div class="col-sm-6">
-      <h2 class=card-title>{{product.brand}} {{product.model_name}} {{product.ram}}/{{product.hdd}}Gb</h2>
+      <h2 class="text-danger">{{product.brand}} {{product.model_name}} {{product.color}} {{product.hdd}}/{{product.ram}}Gb</h2>
     </div>
   </div>
 
@@ -54,13 +54,13 @@
     </div>
 
 
-    <div class="col-sm-8">
+    <div class="col-sm-8 text-danger">
       <h2>{{product.price}} руб.</h2><br>
       {% if product.stock <= 0 %}
-        <p class="text-justify product_text"><b>Out of Stock</b></p>
+        <p class="text-justify product_text text-danger"><b>Out of Stock</b></p>
       {% else %}
         <a href="{% url 'add_cart' product.slug %}">
-          <button type="button" name="button" class="btn btn-primary">
+          <button type="button" name="button" class="btn btn-danger">
             Купить
           </button>
         </a>

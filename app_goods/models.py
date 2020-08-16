@@ -28,9 +28,32 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
+
+class Operator(models.Model):
+    name = models.CharField(max_length=250, unique=True)
+    slug = models.SlugField(max_length=250, unique=True)
+
+    class Meta:
+        ordering = ('name',)
+        verbose_name = 'operato'
+        verbose_name_plural = 'operators'
+
+    def __str__(self):
+        return self.name
+
+class Color(models.Model):
+    _color=models.CharField(max_length=100)
+    class Meta:
+        ordering = ('_color',)
+        verbose_name = 'color'
+        verbose_name_plural = 'colors'
+    def __str__(self):
+        return self._color
+
 class Product(models.Model):
     model_name=models.CharField(max_length=250)
     slug = models.SlugField(max_length=250, unique=True)
+    color=models.ForeignKey(Color, blank=True, on_delete=models.DO_NOTHING)
     brand=models.ForeignKey(Brand, default="Samsung", blank=True, on_delete=models.DO_NOTHING)
     category=models.ForeignKey(Category, default="Smartphones", blank=True, on_delete=models.DO_NOTHING)
     description = models.TextField(blank=True)
@@ -49,6 +72,9 @@ class Product(models.Model):
     image_1 = models.ImageField(upload_to='photos', blank=True)
     image_2 = models.ImageField(upload_to='photos', blank=True)
     stock = models.IntegerField()
+    sales = models.BooleanField(default=False)
+    bestsellers = models.BooleanField(default=False)
+    discounts = models.BooleanField(default=False)
     available = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -112,20 +138,3 @@ class CartItem(models.Model):
             product=Product.objects.get(slug=self.slug)
             return reverse('product_detail', args=[product.id])
     
-    # Product Reviews
-# =====================================================
-
-# class Review(models.Model):
-#     title = models.ForeignKey(Product)
-#     user = models.ForeignKey(User)
-#     review=models.TextField()
-#     created = models.DateTimeField(auto_now_add=True)
-#     created = 
-#     class Meta:
-#         ordering = ('created',) 
-#         verbose_name = 'review'
-#         verbose_name_plural = 'reviews'
-#     # def get_url(self):
-#     #     return reverse('product_detail', args=[self.id])
-#     def __str__(self):
-#         return self.title

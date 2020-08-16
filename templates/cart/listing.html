@@ -7,61 +7,87 @@
 <!-- Checkboxes -->
 <!-- ===================================================== -->
 <div class="container">
-  <div class="row">
-    <div class="col-sm-3">
+  <div class="row mt-4 pt-5">
+    <div class="col-3">
       <form action="{% url 'search' %}">
+        {% csrf_token %}
+        <ul>
         <div>
           <ul>
           <li><label for="manufacture">Производитель</label></li>
-          <li><input type="checkbox" id="manufacture" name="manufacture" value="Samsung">Samsung </li>
-          <input type="checkbox" id="manufacture" name="manufacture" value="Honor">Honor <br>
-          <input type="checkbox" id="manufacture" name="manufacture" value="Huawei">Huawei <br>
-          <input type="checkbox" id="manufacture" name="manufacture" value="Apple">Apple <br>
-          <input type="checkbox" id="manufacture" name="manufacture" value="Xiaomi">Xiaomi <br>
-          <input type="checkbox" id="manufacture" name="manufacture" value="Sony">Sony <br>
-          <input type="submit" value="Submit"class="btn btn-primary">
+          <input type="checkbox" id="manufacture" name="manufacture" value="Samsung"> Samsung <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Honor"> Honor <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Huawei"> Huawei <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Apple"> Apple <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Xiaomi"> Xiaomi <br>
+          <input type="checkbox" id="manufacture" name="manufacture" value="Sony"> Sony <br>
+          
         </div>
       </ul>
+      <ul>
+        <div>
+          <ul>
+            <li><label for="price">Цена</label></li>
+            <input type="checkbox" id="price" name="price" value="5000.00"> 5000 <br>
+            <input type="checkbox" id="price" name="price" value="7000.00"> 7000 <br>
+            <input type="checkbox" id="price" name="price" value="9000.00"> 9000 <br>
+            <input type="checkbox" id="price" name="price" value="18000.00"> 18000 <br>
+            
+        </div>
+      </ul>
+      <ul>
+        <div>
+          <ul>
+            <li><label for="ram">Оперативная память</label></li>
+            <input type="checkbox" id="ram" name="ram" value="1"> 1 <br>
+            <input type="checkbox" id="ram" name="ram" value="2"> 2 <br>
+            <input type="checkbox" id="ram" name="ram" value="3"> 3 <br>
+            <input type="checkbox" id="ram" name="ram" value="4"> 4 <br>
+      
+        </div>
+      </ul>
+        <input type="submit" value="Применить" class="btn btn-danger btn-block">
       </form>
     </div>
 
       <!-- Listing products -->
 <!-- ==================================================================================== -->
-<div class="col-9">
-     <div class="container">
-       <br>
-       <div class="row">
-        {% for product in products %}
-        <div class="col-4 border text-primary">
-          <p><h5>{{product.brand}} {{product.model_name}} {{product.hdd}}/{{product.ram}}Gb</h4></p>
-            <a href="{{product.get_url}}">
+    <div class="col-9">
+      <div class="row">
+        {% for product in queryset_list %}
+          <div class="col-4 border text-danger">
+            <div class="row align-items-start justify-content-center" style="height:80px">
+              <h5>{{product.brand}} {{product.model_name}} {{product.color}}<br> {{product.ram}}/{{product.hdd}}Gb</h5>
+            </div>
+            <div class="row align-items-center justify-content-center" style="height:270px">
+              <a href="{{product.get_url}}">
               <div class="text-center">
               <img src="{{product.image.url}}"  width=130 alt="{{product.model_name}}">
               </div>
-            </a>
-          <p><h4>{{product.price}} руб.</h4></p>
-
-          {% if product.stock <= 0 %}
-          <p class="text-justify product_text"><b>Out of Stock</b></p>
-          {% else %}
-            <a href="{% url 'add_cart' product.slug %}">  
-            <button type="button" name="button" class="btn btn-primary btn-block">
-            Купить
-            </button>
-            <br>
-            </a>
-          {% endif %}
-        </div>
+              </a>
+            </div>
+            <div class="row align-items-center justify-content-center" style="height:120px">
+              <div class="col">
+              <p><h4>{{product.price}} руб.</h4></p>
+              {% if product.stock <= 0 %}
+              <p class="text-justify product_text"><b>Out of Stock</b></p>
+              {% else %}
+              <a href="{% url 'add_cart' product.slug %}">  
+              <button type="button" name="button" class="btn btn-danger btn-block">
+              Купить
+              </button>
+              <br>
+              </a>
+              {% endif %}
+            </div>
+            </div>
+          </div>
         {% endfor %}
        </div>
      </div>
   </div>
      
-           
-<!-- =========================================================== -->
-    
-    
-    </div>
+
 
     <!-- Paginator -->
 <!-- ===================================================================== -->

@@ -1,14 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from . models import Cart, CartItem, Accessory, Product
+from . models import Cart, CartItem, Accessory, Product, Brand
 from django.core.exceptions import ObjectDoesNotExist
-from . choices import brand_choices, price_choices, battery_choices
 from django.db.models import Q
 
 def index(request):
-    products=Product.objects.all()
+    products_bestsellers=Product.objects.filter(sales=True)
+    products_discounts=Product.objects.filter(discounts=True)
+
     context = {
         #'category': category_page,
-        'products': products,
+        'products_bestsellers': products_bestsellers,
+        'products_discounts': products_discounts,
         # 'brand_choices': brand_choices,
         # 'price_choices': price_choices,
         # 'battery_choices': battery_choices,
@@ -23,12 +25,12 @@ def listing (request):
     # products=None
     # if smartphones_page!=None:
         #category_page=get_object_or_404(Category, slug=category_slug)
-    products=Product.objects.all()
+    queryset_list=Product.objects.all()
     # else:
     #     products=Product.objects.all().filter(available=True)
     context = {
         #'category': category_page,
-        'products': products,
+        'queryset_list': queryset_list,
         # 'brand_choices': brand_choices,
         # 'price_choices': price_choices,
         # 'battery_choices': battery_choices,
@@ -36,39 +38,39 @@ def listing (request):
     return render (request, 'cart/listing.html',context )
 
 def listing_smartphone (request):
-    products=Product.objects.filter(category=2)
+    queryset_list = Product.objects.filter(category=2)
     context = {
-        'products': products,
+        'queryset_list': queryset_list,
         }
-    return render (request, 'cart/listing.html',context )
+    return render (request, 'cart/listing_smartphone.html',context )
 
 def listing_smartwatch (request):
-    products=Product.objects.filter(category=3)
+    queryset_list = Product.objects.filter(category=3)
     context = {
-        'products': products,
+        'queryset_list': queryset_list,
         }
-    return render (request, 'cart/listing.html',context )
+    return render (request, 'cart/listing_smartwatch.html',context )
 
 def listing_sim (request):
-    products=Product.objects.filter(category=4)
+    queryset_list = Product.objects.filter(category=4)
     context = {
-        'products': products,
+        'queryset_list': queryset_list,
         }
-    return render (request, 'cart/listing.html',context )
+    return render (request, 'cart/listing_sim.html',context )
 
 def listing_lte (request):
-    products=Product.objects.filter(category=5)
+    queryset_list = Product.objects.filter(category=5)
     context = {
-        'products': products,
+        'queryset_list': queryset_list,
         }
-    return render (request, 'cart/listing.html',context )
+    return render (request, 'cart/listing_lte.html',context )
 
 def listing_accessory (request):
     accessories=Accessory.objects.all()
     context = {
         'accessories': accessories,
         }
-    return render (request, 'cart/listing.html',context )  
+    return render (request, 'cart/listing_accessory.html',context )  
 
     # Single Product Card
 # =================================================
@@ -100,46 +102,137 @@ def accessoryPage(request, accs_id):
         'accessory': accessory,
     }
     template='cart/accessory/accessory.html'
-    return render (request, template, context)
-
+    return render(request, template, context)
+    
     # Search functions
 # ============================================
-def search(request):
-    queryset_list=Product.objects.order_by('-created')
+def gen_search(request):
+    if request.method == 'POST':
+        keyword = request.POST['keyword']
+        if keyword:  #if search line is not blank
+            if Product.objects.filter(model_name__icontains=keyword).exists():
+                queryset_list = Product.objects.filter(model_name__icontains=keyword)
+                context= {
+                    'queryset_list': queryset_list
+                    }
+                template='cart/listing.html'
+                return render(request, template, context)
+            else:
+                if Brand.objects.filter(name__icontains=keyword).exists():
+                    brand_name = Brand.objects.get(name__icontains=keyword)
+                    queryset_list = Product.objects.filter(brand=brand_name)
+                    context = {
+                        'queryset_list': queryset_list
+                    }
+                    template = 'cart/listing.html'
+                    return render(request, template, context)
+                else:
+                    return redirect ('index')
+        else:
+            return redirect('index')
 
+def search_smartphone(request):
+    queryset_list = Product.objects.filter(category=2)
     if 'manufacture' in request.GET:
-        manufacturers=request.GET.getlist('manufacture', None)
-        if manufacturers:
-            queryset_list=queryset_list.filter(brand__in=manufacturers)
-
-    if 'model' in request.GET:
-         model=request.GET['model']
-         if model:
-           queryset_list=queryset_list.filter(name__icontains=model) 
-           #queryset_list=queryset_list.filter(name__iexact=model)
-
-    if 'brand' in request.GET:
-         brand=request.GET['brand']
-         if brand:
-           queryset_list=queryset_list.filter(brand__iexact=brand) 
+        manufacturers = request.GET.getlist('manufacture', None)
+        if manufacturers:# if checked
+            brand_names = Brand.objects.filter(name__in=manufacturers)
+            queryset_list = queryset_list.filter(brand__in=brand_names)
     if 'price' in request.GET:
-         price=request.GET['price']
-         if price:
-           queryset_list=queryset_list.filter(price__lte=price) #lower than
-    if 'battery' in request.GET:
-         battery=request.GET['battery']
-         if battery:
-            queryset_list=queryset_list.filter(battery__gte=battery) #greater then
-        #    queryset_list=queryset_list.filter(battery__range=battery) #greater then
-    context= {
-        'brand_choices': brand_choices,
-        'price_choices': price_choices,
-        'battery_choices': battery_choices,
-        'products': queryset_list,
-        'values': request.GET #leaves the input data in the form
+        price = request.GET['price']
+        if price: #if checked
+            queryset_list = queryset_list.filter(price__lte=price)
+    if 'ram' in request.GET: #if checked
+        ram = request.GET['ram']
+        if ram:
+            queryset_list = queryset_list.filter(ram__lte=ram)
+    context = {
+        'queryset_list': queryset_list,
     }
-    return render (request, 'cart/search.html', context)
+    return render(request, 'cart/listing_smartphone.html', context)
 
+def search_smartwatch(request):
+    queryset_list = Product.objects.filter(category=3)
+    if 'manufacture' in request.GET:
+        manufacturers = request.GET.getlist('manufacture', None)
+        if manufacturers:  # if checked
+            brand_names = Brand.objects.filter(name__in=manufacturers)
+            queryset_list = queryset_list.filter(brand__in=brand_names)
+    if 'price' in request.GET:
+        price = request.GET['price']
+        if price:  # if checked
+            queryset_list = queryset_list.filter(price__lte=price)
+    if 'ram' in request.GET:  # if checked
+        ram = request.GET['ram']
+        if ram:
+            queryset_list = queryset_list.filter(ram__lte=ram)
+    context = {
+        'queryset_list': queryset_list,
+    }
+    return render(request, 'cart/listing_smartwatch.html', context)
+
+
+def search_accessory(request):
+    queryset_list = Product.objects.filter(category=3)
+    if 'manufacture' in request.GET:
+        manufacturers = request.GET.getlist('manufacture', None)
+        if manufacturers:  # if checked
+            brand_names = Brand.objects.filter(name__in=manufacturers)
+            queryset_list = queryset_list.filter(brand__in=brand_names)
+    if 'price' in request.GET:
+        price = request.GET['price']
+        if price:  # if checked
+            queryset_list = queryset_list.filter(price__lte=price)
+    if 'ram' in request.GET:  # if checked
+        ram = request.GET['ram']
+        if ram:
+            queryset_list = queryset_list.filter(ram__lte=ram)
+    context = {
+        'queryset_list': queryset_list,
+    }
+    return render(request, 'cart/listing_accessory.html', context)
+
+
+def search_sim(request):
+    queryset_list = Product.objects.filter(category=3)
+    if 'manufacture' in request.GET:
+        manufacturers = request.GET.getlist('manufacture', None)
+        if manufacturers:  # if checked
+            brand_names = Brand.objects.filter(name__in=manufacturers)
+            queryset_list = queryset_list.filter(brand__in=brand_names)
+    if 'price' in request.GET:
+        price = request.GET['price']
+        if price:  # if checked
+            queryset_list = queryset_list.filter(price__lte=price)
+    if 'ram' in request.GET:  # if checked
+        ram = request.GET['ram']
+        if ram:
+            queryset_list = queryset_list.filter(ram__lte=ram)
+    context = {
+        'queryset_list': queryset_list,
+    }
+    return render(request, 'cart/listing_sim.html', context)
+
+
+def search_lte(request):
+    queryset_list = Product.objects.filter(category=3)
+    if 'manufacture' in request.GET:
+        manufacturers = request.GET.getlist('manufacture', None)
+        if manufacturers:  # if checked
+            brand_names = Brand.objects.filter(name__in=manufacturers)
+            queryset_list = queryset_list.filter(brand__in=brand_names)
+    if 'price' in request.GET:
+        price = request.GET['price']
+        if price:  # if checked
+            queryset_list = queryset_list.filter(price__lte=price)
+    if 'ram' in request.GET:  # if checked
+        ram = request.GET['ram']
+        if ram:
+            queryset_list = queryset_list.filter(ram__lte=ram)
+    context = {
+        'queryset_list': queryset_list,
+    }
+    return render(request, 'cart/listing_lte.html', context)
 
     # Cart Functions
 # =================================================
@@ -222,6 +315,28 @@ def cart_detail(request, total=0, counter=0, cart_items=None):
     except ObjectDoesNotExist:
         new_total=0.00   
     return render (request, 'cart/cart.html', dict(cart_items = cart_items, new_total=new_total, counter=counter))
+
+def remove_from_cart (request, product_slug):
+    cart=Cart.objects.get(cart_id =_cart_id(request))
+    cart_item=CartItem.objects.get(cart=cart, slug=product_slug)
+    if cart_item.quantity > 1:
+        cart_item.quantity-=1
+        cart_item.save()
+    else:
+        cart_item.delete()
+    context={
+                'cart_item':cart_item,
+            }
+    return redirect ('cart_detail')
+
+def delete_cartitem(request, product_slug):
+    cart=Cart.objects.get(cart_id =_cart_id(request))
+    cart_item=CartItem.objects.get(cart=cart, slug=product_slug)
+    cart_item.delete()
+    context={
+                'cart_item':cart_item,
+            }
+    return redirect ('cart_detail')
 
 # ============================================================
     # Adding Accessories to Cart

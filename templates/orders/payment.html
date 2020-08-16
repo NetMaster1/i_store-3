@@ -1,16 +1,21 @@
 {% extends 'base.html'%}
 {% load static %}
 {% block content %}
-<h1>Thank you for your order</h1>
-<h1>Please, choose your pament method</h1>
-
+<div class="container">
+  <div class="row mt-4 pt-5">
+    <h3>Пожалуйста, выберите вариант оплаты</h3>
+  </div>
+  <h1><i class=" text-danger far fa-credit-card"></i></h1>
+  <div class="row " style="padding:10px">
 <form action="{% url 'payment_choice' %}">
     <div>
-      <label for="payment">Доставка</label><br>
+      <label for="payment">Способ оплаты</label><br>
       <input type="radio" name="payment" value="credit" id="payment">Credit Card<br>
       <input type="radio" name="payment" value="cash" id="payment">Платеж при получении
     </div>
-    <input type="submit" value="Submit"class="btn btn-primary">
+    <br>
+    <input type="submit" value="Указать способ оплаты"class="btn btn-danger">
 </form>
-
+</div>
+</div>
 {% endblock%}

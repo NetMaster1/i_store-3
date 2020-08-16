@@ -1,10 +1,13 @@
 from django.contrib import admin
-from .models import Product, Cart, CartItem, Brand, Category, Accessory
+from .models import Product, Cart, CartItem, Brand, Category, Accessory, Color, Operator
 
 class ProductAdmin(admin.ModelAdmin):
     list_display = ('id', 'brand', 'model_name')
-    prepopulated_fields = {'slug': ('model_name','colour','ram' )}
+    prepopulated_fields = {'slug': ('brand','model_name', 'color', 'hdd','ram' )}
     list_filter = ('brand',)#creates a filter at the side panel
+
+class ColorAdmin(admin.ModelAdmin):
+    list_display = ('id', '_color')
 
 class AccessoryAdmin(admin.ModelAdmin):
     list_display = ('id', 'name',)
@@ -15,6 +18,10 @@ class CategoryAdmin(admin.ModelAdmin):
     prepopulated_fields = {'slug': ('name',)}
 
 class BrandAdmin(admin.ModelAdmin):
+    list_display = ('id', 'name')
+    prepopulated_fields = {'slug': ('name',)}
+
+class OperatorAdmin(admin.ModelAdmin):
     list_display = ('id', 'name')
     prepopulated_fields = {'slug': ('name',)}
 
@@ -34,4 +41,8 @@ admin.site.register(Cart, CartAdmin),
 admin.site.register(CartItem, CartItemAdmin),
 admin.site.register(Brand, BrandAdmin),
 admin.site.register(Category, CategoryAdmin),
+admin.site.register(Color, ColorAdmin),
+admin.site.register(Operator, OperatorAdmin),
+
+
 

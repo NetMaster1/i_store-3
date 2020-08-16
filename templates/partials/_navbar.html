@@ -1,7 +1,7 @@
 {% load static %}
 
 <!-- Navigation -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary fixed-top">
+<nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
 
   <div class="container">
     <h3><div class="text-light">www.evvy.ru</div></h3>
@@ -14,15 +14,30 @@
 
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
-        
+
+     
+      <form action="{% url 'gen_search' %}" method='POST'>
+        {% csrf_token %}
+        <span>
+          <input type="text" name="keyword" placeholder="Модель или брэнд">
+        </span>
+          <input type="submit" value="Поиск" class="btn btn-secondary btn">
+        </span>
+      </form>
+     
+
         <li class="nav-item active">
-          <a class="nav-link" href="{% url 'index' %}">Главная
+          <a class="nav-link" href="{% url 'index' %}">
+            <i class="fas fa-home"></i>
+            Главная
             <span class="sr-only">(current)</span>
           </a>
         </li>
 
         <li class="nav-item">
-          <a class="nav-link" href="{% url 'contacts' %}">Контакты</a>
+          <a class="nav-link" href="{% url 'contacts' %}">
+            <i class="fas fa-phone-square"></i>
+          Контакты</a>
         </li>
 
 
@@ -36,21 +51,21 @@
         {% if user.is_authenticated %}
         <li class="nav-item mr-3">
           <a class="nav-link" href="{% url 'orders_history' %}">
-            <i class="fas fa-user-plus"></i>  
-           Ваши заказы
+            <i class="fas fa-clipboard-check"></i> 
+           Заказы
           </a>
         </li>
 
         <li class="nav-item mr-3">
           <a class="nav-link" href="{% url 'password_change' %}">
-            <i class="fas fa-user-plus"></i>  
-           Изменить пароль
+            <i class="fas fa-lock"></i> 
+           Пароль
           </a>
         </li>
 
         <li class="nav-item mr-3">
           <a class="nav-link" href="{% url 'logout' %}">
-            <i class="fas fa-user-plus"></i>  
+            <i class="fas fa-sign-out-alt"></i> 
            Выйти
           </a>
         </li>
@@ -61,7 +76,7 @@
 
         <li class="nav-item mr-3">
           <a class="nav-link" href="{% url 'login' %}">
-            <i class="fas fa-user-plus"></i>  
+            <i class="fas fa-sign-in-alt"></i>
             Войти
           </a>
         </li>
@@ -75,7 +90,7 @@
         {% endif %}
         <li class="nav-item mr-3">
           <a class="nav-link" href="{% url 'cart_detail' %}">
-          <i class="fas fa-user-plus"></i>  
+            <i class="fas fa-shopping-cart"></i> 
           Корзина {{counter}}
         </a>
       </li>

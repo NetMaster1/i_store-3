@@ -2,53 +2,98 @@
 {% load static %}
 {% block content %}
 
-
   <!-- Page Content -->
 <div class="container">
-  <div class="row">
-    <div class="col-3"><br>
+  <div class="row mt-4 pt-5 align-items-start">
+    <div class="col-3 text-danger">
         <!-- Left Menu -->
         <div class="list-group">
           <!-- <a href="" class="list-group-item">Ноутбуки</a>
           <a href="" class="list-group-item">iPhone</a> -->
-          <a href="{% url 'listing_smartphone' %}" class="list-group-item">Смартфоны</a>
+          <a href="{% url 'listing_smartphone' %}" class="list-group-item text-danger">Смартфоны</a>
           <!-- <a href="" class="list-group-item">Кнопочные телефоны</a> -->
-          <a href="{% url 'listing_smartwatch' %}" class="list-group-item">Умные часы</a>
-          <a href="{% url 'listing_accessory' %}" class="list-group-item">Аксессуары</a>
-          <a href="{% url 'listing_sim' %}" class="list-group-item">Сим карты</a>
-          <a href="{% url 'listing_lte' %}" class="list-group-item">LTE роутеры и модемы</a>
+          <a href="{% url 'listing_smartwatch' %}" class="list-group-item text-danger">Умные часы</a>
+          <a href="{% url 'listing_accessory' %}" class="list-group-item text-danger">Аксессуары</a>
+          <a href="{% url 'listing_sim' %}" class="list-group-item text-danger">Сим карты</a>
+          <a href="{% url 'listing_lte' %}" class="list-group-item text-danger">LTE роутеры и модемы</a>
           <!-- <a href="{% url 'listing_lte' %}" class="list-group-item">Другая херня</a> -->
         </div>
       </div>
+
     <div class="col-9">
         <!-- Carousel -->
-        <div id="carouselExampleSlidesOnly" class="carousel slide my-4" data-ride="carousel">
+        <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-                <img src="{% static 'img/photo_1.jpg' %}" class="d-block w-100" alt="...">
+              <img src="{% static 'img/Android.jpg' %}" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="{% static 'img/photo_2.jpg' %}" class="d-block w-100" alt="...">
+              <img src="{% static 'img/photo_1.jpg' %}" class="d-block w-100" alt="...">
             </div>
             <div class="carousel-item">
-              <img src="{% static 'img/photo_3.jpg' %}" class="d-block w-100" alt="...">
+              <img src="{% static 'img/screen.jpg' %}" class="d-block w-100" alt="...">
             </div>
           </div>
+          <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
         </div>
     </div>
   </div>
+
   <div class="row">
-    <div class="col-12 text-primary">
-      <h2>Новинки, хиты продаж и товары дня</h2>
+    <div class="col-12 text-danger">
+      <h2 class="g_font">Бестселлеры</p>
     </div>
   </div>
 
   <div class="row" >
-    {% for product in products %}
-    <div class="col-3 border text-primary" >
+    {% for product in products_bestsellers %}
+    <div class="col-sm-3 border text-danger" >
+      <div class="row align-items-start justify-content-center" style="height:80px" >
+      <h5>{{product.brand}} {{product.model_name}} {{product.color}}<br> {{product.ram}}/{{product.hdd}}Gb</h5>
+    </div>
+    <div class="row align-items-center justify-content-center" style="height:270px" >
+      <a href="{{product.get_url}}">
+          <img src="{{product.image.url}}"  width=130 alt="{{product.model_name}}">
+        </a>
+    </div>
+     <div class="row align-items-center" style="height:120px" >
+       <div class="col bg_red">
+      <h4>{{product.price}} руб.</h4>
+    
+      {% if product.stock <= 0 %}
+      <p class="text-justify product_text"><b>Out of Stock</b></p>
+      {% else %}
+        <a href="{% url 'add_cart' product.slug %}">
+        <button type="button" name="button" class="btn btn-danger btn-block">
+        Купить
+        </button>
+        </a>
+      {% endif %}
+    </div>
+    </div>
+    </div>
+      {% endfor %} 
+  </div>
+
+  <div class="row">
+    <div class="col-12 text-danger">
+      <h2 class="g_font">Распродажи</h2>
+    </div>
+  </div>
+  <div class="row" >
+    {% for product in products_discounts %}
+    <div class="col-sm-3 border text-danger" >
+
       <div class="row align-items-start justify-content-center" style="height:80px" >
         <!-- <div class="col"> -->
-      <h5>{{product.brand}} {{product.model_name}}<br> {{product.hdd}}/{{product.ram}}Gb</h5>
+      <h5>{{product.brand}} {{product.model_name}} {{product.color}}<br> {{product.ram}}/{{product.hdd}}Gb</h5>
       <!-- </div>   -->
     </div>
 
@@ -57,27 +102,29 @@
       <a href="{{product.get_url}}">
           <img src="{{product.image.url}}"  width=130 alt="{{product.model_name}}">
         </a>
-      </div>
+    </div>
     <!-- </div> -->
 
-    <div class="row align-items-center justify-content-left" style="height:120px" >
-        <div class="col">
+     <div class="row align-items-center" style="height:120px" >
+       <div class="col">
       <h4>{{product.price}} руб.</h4>
+    
       {% if product.stock <= 0 %}
       <p class="text-justify product_text"><b>Out of Stock</b></p>
       {% else %}
         <a href="{% url 'add_cart' product.slug %}">
-        <button type="button" name="button" class="btn btn-primary btn-block">
+        <button type="button" name="button" class="btn btn-danger btn-block">
         Купить
         </button>
         </a>
       {% endif %}
-        </div>
+    </div>
     </div>
     </div>
       {% endfor %} 
-    
-  
   </div>
+
+
+  
 </div>
 {% endblock %}
