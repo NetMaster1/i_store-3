@@ -28,7 +28,6 @@ class Brand(models.Model):
     def __str__(self):
         return self.name
 
-
 class Operator(models.Model):
     name = models.CharField(max_length=250, unique=True)
     slug = models.SlugField(max_length=250, unique=True)
@@ -54,14 +53,14 @@ class Product(models.Model):
     model_name=models.CharField(max_length=250)
     slug = models.SlugField(max_length=250, unique=True)
     color=models.ForeignKey(Color, blank=True, on_delete=models.DO_NOTHING)
-    brand=models.ForeignKey(Brand, default="Samsung", blank=True, on_delete=models.DO_NOTHING)
+    brand = models.ForeignKey(Brand, default="Samsung", blank=True, on_delete=models.DO_NOTHING)
+    operator = models.ForeignKey(Operator, null=True, blank=True, on_delete=models.DO_NOTHING)
     category=models.ForeignKey(Category, default="Smartphones", blank=True, on_delete=models.DO_NOTHING)
     description = models.TextField(blank=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     display=models.DecimalField(max_digits=3, decimal_places=2, blank=True, default=0)
     hdd=models.IntegerField(default=0)
     ram=models.IntegerField(default=0)
-    colour=models.CharField(max_length=250, default='Black', blank=True)
     camera_1=models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0)
     camera_2=models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0)
     front_camera=models.DecimalField(max_digits=5, decimal_places=2, default=0)

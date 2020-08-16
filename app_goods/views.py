@@ -215,7 +215,7 @@ def search_sim(request):
 
 
 def search_lte(request):
-    queryset_list = Product.objects.filter(category=3)
+    queryset_list = Product.objects.filter(category=5)
     if 'manufacture' in request.GET:
         manufacturers = request.GET.getlist('manufacture', None)
         if manufacturers:  # if checked
