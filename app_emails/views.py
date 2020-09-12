@@ -26,7 +26,7 @@ def email(request):
 #     email.send()
 #     return HttpResponse ('Sent')
 
-# def send_mail_with_stored_file(request):
+# def send_plain_email(request):
 #     message=request.POST.get('message', '')
 #     subject=request.POST.get('subject', '')
 #     mail_id=request.POST.get('email', '')
@@ -36,12 +36,19 @@ def email(request):
 #         EMAIL_HOST_USER,
 #         [mail_id]
 #     )
-#     email.content_subtype='html'
-#     file=open('readme.md', 'r')
-#     email.attach('readme.md', file.read(), 'text/plain')
-#     email.send()
+    email.content_subtype='html'
+    file=open('readme.md', 'r')
+    email.attach('readme.md', file.read(), 'text/plain')
+    email.send()
 
-# def send_mail_with_file(request):
+def send_file(request):
+  send_mail(
+        'Hello from DjangoDev',
+        'Here goes email text',
+        '79200711112@yandex.ru',
+        ['Sergei_Vinokurov@rambler.ru'],
+        fail_silently=False
+    )
 #     message=request.POST.get('message', '')
 #     subject=request.POST.get('subject', '')
 #     mail_id=request.POST.get('email', '')

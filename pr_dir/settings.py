@@ -41,9 +41,9 @@ INSTALLED_APPS = [
     'app_goods',
     'app_accounts',
     'app_orders',
-    'app_emails',
+    # 'app_emails',
     'app_reviews',
-    'app_contacts'
+    'app_contacts', 
 ]
 
 MIDDLEWARE = [
@@ -57,6 +57,7 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'pr_dir.urls'
+
 
 TEMPLATES = [
     {
@@ -142,7 +143,15 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'pr_dir/static')
 ]
 
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_POSRT = 537
+EMAIL_HOST_USER = '79200711112@yandex.ru'
+EMAIL_HOST_PASSWORD = '39aZifol_01'
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+
 try:
     from .local_settings import *
 except ImportError:
     pass
+

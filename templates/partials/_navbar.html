@@ -4,40 +4,46 @@
 <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top">
 
   <div class="container">
+    <!-- <div class="row justify-content-center align-imems-center"> -->
     <h3><div class="text-light">www.evvy.ru</div></h3>
-    
-    <!-- <a class="navbar-brand" href="#"><img src="{% static 'img/photo_1.jpg' %}" alt=""></a> -->
-
-    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button> -->
 
     <div class="collapse navbar-collapse" id="navbarResponsive">
       <ul class="navbar-nav ml-auto">
 
-     
-      <form action="{% url 'gen_search' %}" method='POST'>
+      <div>
+      <form action="{% url 'gen_search' %}" method='POST'  class="form-inline my-2 my-lg-0">
         {% csrf_token %}
         <span>
-          <input type="text" name="keyword" placeholder="Модель или брэнд">
+          <!-- <input type="text" name="keyword" placeholder="Модель или брэнд" class='rounded'> -->
+          <input type="text" name="keyword" placeholder="Модель или брэнд" class="form-control mr-sm-2" >
         </span>
-          <input type="submit" value="Поиск" class="btn btn-secondary btn">
+          <button class="btn btn-sm btn-outline-light" input type="submit">Поиск</button>
         </span>
       </form>
+      </div>
      
-
-        <li class="nav-item active">
+        <li
+          {% if '/' == request.path %}
+          class="nav-item active"
+          {% else %}
+          class="nav-item"
+          {% endif %}>
           <a class="nav-link" href="{% url 'index' %}">
-            <i class="fas fa-home"></i>
-            Главная
-            <span class="sr-only">(current)</span>
-          </a>
+          <i class="fas fa-home"></i>
+          Главная
+          </a>  
         </li>
 
-        <li class="nav-item">
-          <a class="nav-link" href="{% url 'contacts' %}">
-            <i class="fas fa-phone-square"></i>
-          Контакты</a>
+        <li {% if 'contacts' in request.path %} 
+        class="nav-item active" 
+        {% else %} 
+        class="nav-item" 
+        {% endif %}>
+        <a class="nav-link" 
+        href="{% url 'contacts' %}">
+        <i class="fas fa-home"></i>
+        Контакты
+        </a>
         </li>
 
 
@@ -49,53 +55,78 @@
         <!-- ======================================================= -->
 
         {% if user.is_authenticated %}
-        <li class="nav-item mr-3">
-          <a class="nav-link" href="{% url 'orders_history' %}">
-            <i class="fas fa-clipboard-check"></i> 
-           Заказы
-          </a>
+        
+        <li {% if 'orders_history' in request.path %} 
+        class="nav-item active" 
+        {% else %} class="nav-item" 
+        {% endif %}>
+        <a class="nav-link" href="{% url 'orders_history' %}">
+        <i class="fas fa-clipboard-check"></i> 
+        Заказы
+        </a>
         </li>
 
-        <li class="nav-item mr-3">
-          <a class="nav-link" href="{% url 'password_change' %}">
-            <i class="fas fa-lock"></i> 
-           Пароль
-          </a>
+        <li {% if 'password' in request.path %} 
+        class="nav-item active" 
+        {% else %} 
+        class="nav-item" 
+        {% endif %}>
+        <a class="nav-link" href="{% url 'password_change' %}">
+        <i class="fas fa-lock"></i> 
+        Пароль
+        </a>
         </li>
 
-        <li class="nav-item mr-3">
-          <a class="nav-link" href="{% url 'logout' %}">
-            <i class="fas fa-sign-out-alt"></i> 
-           Выйти
-          </a>
+        <li {% if 'logout' in request.path %} 
+        class="nav-item active" 
+        {% else %} 
+        class="nav-item" 
+        {% endif %}>
+        <a class="nav-link" href="{% url 'logout' %}">
+        <i class="fas fa-sign-out-alt"></i> 
+        Выйти
+        </a>
         </li>
 
           <!-- Interface for a user who has not logged in yet -->
           <!-- =========================================== -->
         {% else %}
 
-        <li class="nav-item mr-3">
-          <a class="nav-link" href="{% url 'login' %}">
-            <i class="fas fa-sign-in-alt"></i>
-            Войти
-          </a>
+        
+        <li {% if 'login' in request.path %} 
+        class="nav-item active" 
+        {% else %} class="nav-item" 
+        {% endif %}>
+        <a class="nav-link" href="{% url 'login' %}">
+        <i class="fas fa-sign-in-alt"></i>
+        Войти
+        </a>
         </li>
 
-         <li class="nav-item mr-3">
-          <a class="nav-link" href="{% url 'register' %}">
-            <i class="fas fa-user-plus"></i>  
-            Зарегистрироваться
-          </a>
-        </li>
-        {% endif %}
-        <li class="nav-item mr-3">
-          <a class="nav-link" href="{% url 'cart_detail' %}">
-            <i class="fas fa-shopping-cart"></i> 
-          Корзина {{counter}}
+        <li {% if 'register' in request.path %} 
+        class="nav-item active" 
+        {% else %} class="nav-item" 
+        {% endif %}>
+        <a class="nav-link" href="{% url 'register' %}">
+        <i class="fas fa-user-plus"></i>  
+        Зарегистрироваться
         </a>
-      </li>
+        </li>
+
+
+        {% endif %}
+          <li {% if 'cart' in request.path %} 
+          class="nav-item active" 
+          {% else %} class="nav-item" 
+          {% endif %}>
+          <a class="nav-link" href="{% url 'cart_detail' %}">
+          <i class="fas fa-shopping-cart"></i> 
+          Корзина {{counter}}
+          </a>
+          </li>
 
       </ul>
     </div>
+    <!-- </div> -->
   </div>
 </nav>

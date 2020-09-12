@@ -7,48 +7,61 @@
 <!-- Checkboxes -->
 <!-- ===================================================== -->
 <div class="container">
+
     <div class="row mt-4 pt-5">
-        <div class="col-3">
-            <form action="{% url 'search_smartwatch' %}">
-                {% csrf_token %}
-                <ul>
-                    <div>
-                        <ul>
-                            <li><label for="manufacture">Производитель</label></li>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Samsung"> Samsung <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Honor"> Honor <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Huawei"> Huawei <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Apple"> Apple <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Xiaomi"> Xiaomi <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Sony"> Sony <br>
-
-                    </div>
-                </ul>
-                <ul>
-                    <div>
-                        <ul>
-                            <li><label for="price">Цена</label></li>
-                            <input type="checkbox" id="price" name="price" value="5000.00"> 5000 <br>
-                            <input type="checkbox" id="price" name="price" value="7000.00"> 7000 <br>
-                            <input type="checkbox" id="price" name="price" value="9000.00"> 9000 <br>
-                            <input type="checkbox" id="price" name="price" value="18000.00"> 18000 <br>
-
-                    </div>
-                </ul>
-                <ul>
-                    <div>
-                        <ul>
-                            <li><label for="ram">Оперативная память</label></li>
-                            <input type="checkbox" id="ram" name="ram" value="1"> 1 <br>
-                            <input type="checkbox" id="ram" name="ram" value="2"> 2 <br>
-                            <input type="checkbox" id="ram" name="ram" value="3"> 3 <br>
-                            <input type="checkbox" id="ram" name="ram" value="4"> 4 <br>
-
-                    </div>
-                </ul>
-                <input type="submit" value="Применить" class="btn btn-danger btn-block">
-            </form>
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Текущая</li>
+                </ol>
+            </nav>
         </div>
+    </div>
+
+<div class="row ">
+    <div class="col-3 bg-light rounded">
+        <form action="{% url 'search_smartwatch' %}">
+            {% csrf_token %}
+            <ul>
+                <li><label for="manufacture">Производитель</label></li>
+                <input type="checkbox" id="manufacture" name="manufacture" value="Samsung"> Samsung
+                <input type="checkbox" id="manufacture" name="manufacture" value="Honor"> Honor <br>
+                <input type="checkbox" id="manufacture" name="manufacture" value="Huawei"> Huawei
+                <input type="checkbox" id="manufacture" name="manufacture" value="Apple"> Apple <br>
+                <input type="checkbox" id="manufacture" name="manufacture" value="Xiaomi"> Xiaomi
+                <input type="checkbox" id="manufacture" name="manufacture" value="Sony"> Sony <br>
+                <input type="checkbox" id="manufacture" name="manufacture" value="ZTE"> ZTE
+                <input type="checkbox" id="manufacture" name="manufacture" value="BQ"> BQ <br>
+            </ul>
+            <ul>
+                <li><label for="Датчики">Датчики</label></li>
+                <input type="checkbox" id="Датчики" name="Датчики" value="барометр"> барометр. <br>
+                <input type="checkbox" id="Датчики" name="Датчики" value="шагомер"> шагомер <br>
+                <input type="checkbox" id="Датчики" name="Датчики" value="счетчки калорий"> счетчки калорий <br>
+                <input type="checkbox" id="Датчики" name="Датчики" value="пульс"> пульс <br>
+                <input type="checkbox" id="Датчики" name="Датчики" value="качество сна"> качество сна <br>
+            </ul>
+          
+            <ul>
+                <li><label for="ram">NFC</label> <input type="checkbox" id="nfc" name="nfc" value="nfc"></li>
+            </ul>
+        <ul>
+            <li><label for="Материал корпуса">Материал корпуса</label></li>
+            <input type="checkbox" id="Материал корпуса" name="Материал корпуса" value="металл"> металл <br>
+            <input type="checkbox" id="Материал корпуса" name="Материал корпуса" value="пластик"> пластик <br>
+        </ul>
+        <ul>
+            <li><label for="Материал ремешка">Материал ремешка</label></li>
+            <input type="checkbox" id="Материал ремешка" name="Материал ремешка" value="ткань"> ткань <br>
+            <input type="checkbox" id="Материал ремешка" name="Материал ремешка" value="пластик"> пластик <br>
+        </ul>
+
+
+
+            <input type="submit" value="Применить" class="btn btn-danger btn-block">
+        </form>
+    </div>
 
         <!-- Listing products -->
         <!-- ==================================================================================== -->
@@ -56,9 +69,8 @@
             <div class="row">
                 {% for product in queryset_list %}
                 <div class="col-4 border text-danger">
-                    <div class="row align-items-start justify-content-center" style="height:80px">
-                        <h5>{{product.brand}} {{product.model_name}} {{product.color}}<br>
-                            {{product.ram}}/{{product.hdd}}Gb</h5>
+                    <div class="row justify-content-center  p-2" style="height:80px">
+                        <h5 class="text-center">{{product.brand}}{{product.model_name}} <br>{{product.color}}<br></h5>
                     </div>
                     <div class="row align-items-center justify-content-center" style="height:270px">
                         <a href="{{product.get_url}}">
@@ -70,7 +82,7 @@
                     <div class="row align-items-center justify-content-center" style="height:120px">
                         <div class="col">
                             <p>
-                            <h4>{{product.price}} руб.</h4>
+                            <h4 class="text-center">{{product.price}} руб.</h4>
                             </p>
                             {% if product.stock <= 0 %}
                             <p class="text-justify product_text"><b>Out of Stock</b></p>

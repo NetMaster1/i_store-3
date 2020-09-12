@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+<h1><i class ="fas fa-truck"></i></h1>
+<div class="row" style="padding:10px">
+  <div class="col">
+
+<form action="{% url 'delivery_choice' order.id %}">
+  <div>
+  <label for="delivery"class="text-danger">Доставка</label>
+  </div>
+  <div>
+  <input type="radio" name="delivery" value="address" id="delivery"> 
+  <span class="text-danger">Доставка по адресу</span>
+  </div>
+  <div>
+  <input type="radio" name="delivery" value="office" id="delivery">
+  <span class="text-danger"> Самовывоз</span>
+  </div>
+  <div>
+    <input type="radio" name="delivery" value="logistics" id="delivery">
+    <span class="text-danger"> До пункта выдачи транспортной компании </span>
+  </div>
+  <input type="submit" value="Выберите спосбо доставки"class="btn btn-danger m-1">
+</form>
+
+</div>
+</div>
+</div>
+{% endblock %}

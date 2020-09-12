@@ -63,7 +63,6 @@ class Migration(migrations.Migration):
                 ('display', models.DecimalField(blank=True, decimal_places=2, default=0, max_digits=3)),
                 ('hdd', models.IntegerField(default=0)),
                 ('ram', models.IntegerField(default=0)),
-                ('colour', models.CharField(blank=True, default='Black', max_length=250)),
                 ('camera_1', models.DecimalField(blank=True, decimal_places=2, default=0, max_digits=5)),
                 ('camera_2', models.DecimalField(blank=True, decimal_places=2, default=0, max_digits=5)),
                 ('front_camera', models.DecimalField(decimal_places=2, default=0, max_digits=5)),
@@ -77,7 +76,7 @@ class Migration(migrations.Migration):
                 ('available', models.BooleanField(default=True)),
                 ('created', models.DateTimeField(auto_now_add=True)),
                 ('updated', models.DateTimeField(auto_now=True)),
-                ('brand', models.ForeignKey(blank=True, default='Samsung', on_delete=django.db.models.deletion.DO_NOTHING, to='app_goods.Brand')),
+                ('brand', models.ForeignKey(null=True, blank=True, on_delete=django.db.models.deletion.DO_NOTHING, to='app_goods.Brand')),
                 ('category', models.ForeignKey(blank=True, default='Smartphones', on_delete=django.db.models.deletion.DO_NOTHING, to='app_goods.Category')),
             ],
             options={

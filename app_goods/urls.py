@@ -11,7 +11,9 @@ urlpatterns = [
     path('listing_accessory', views.listing_accessory, name='listing_accessory'),
   
     #path('<slug:category_slug>', views.category, name='products_by_category'),
+    
     path('<int:product_id>', views.productPage, name='product_detail'),
+
     path('accessory/<int:accs_id>', views.accessoryPage, name='accessory_detail'),
     
     path('cart/add/<slug:product_slug>', views.add_cart, name='add_cart'),#строка для вывода товара по slug из карточки товара в корзину 

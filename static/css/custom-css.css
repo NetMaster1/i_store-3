@@ -1,10 +1,23 @@
-/* . is for classes*/
+{% extends 'base.html%}
+ 
+ /* . is for classes*/
 /* # is for divs */
 
+.l_font {
+  font-family:'Lobster' cursive;
+}
 
-.g_font {
-  font-family: 'Permanent Marker', cursive;
+.r_font {
+  font-family: 'Roboto', sans-serif;
+}
+
+.m_font {
+   font-family: 'Marck Script', cursive;
+}
+
+.p_font {
+  font-family: 'Pacifico', cursive;
 }
 
 
-   
+  

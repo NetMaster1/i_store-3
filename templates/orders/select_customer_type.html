@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container">
+    <h1><i class="fas fa-truck"></i></h1>
+    <div class="row" style="padding:10px">
+        <div class="col">
+
+            <form action="{% url 'customer_choice' order.id %}">
+                <div>
+                    <label for="customer" class="text-danger">Вы покупаете как:</label>
+                </div>
+                <div>
+                    <input type="radio" name="customer" value="person" id="customer">
+                    <span class="text-danger">Физическое лицо</span>
+                </div>
+                <div>
+                    <input type="radio" name="customer" value="entity" id="customer">
+                    <span class="text-danger"> Юридическое лицо</span>
+                </div>
+                
+                <input type="submit" value="Далее" class="btn btn-danger m-1">
+            </form>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

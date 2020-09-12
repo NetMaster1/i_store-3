@@ -48,7 +48,7 @@
 
   <div class="row">
     <div class="col-12 text-danger">
-      <h2 class="g_font">Бестселлеры</p>
+      <h2 class="l_font">Бестселлеры</h2>
     </div>
   </div>
 
@@ -56,7 +56,7 @@
     {% for product in products_bestsellers %}
     <div class="col-sm-3 border text-danger" >
       <div class="row align-items-start justify-content-center" style="height:80px" >
-      <h5>{{product.brand}} {{product.model_name}} {{product.color}}<br> {{product.ram}}/{{product.hdd}}Gb</h5>
+      <h5 class="text-center">{{product.brand}} {{product.model_name}} {{product.ram}}/{{product.hdd}}Gb</h5>
     </div>
     <div class="row align-items-center justify-content-center" style="height:270px" >
       <a href="{{product.get_url}}">
@@ -64,9 +64,10 @@
         </a>
     </div>
      <div class="row align-items-center" style="height:120px" >
-       <div class="col bg_red">
-      <h4>{{product.price}} руб.</h4>
-    
+       <div class="col">
+         <p>
+      <h4 class="text-center">{{product.price}} руб.</h4>
+         </p>
       {% if product.stock <= 0 %}
       <p class="text-justify product_text"><b>Out of Stock</b></p>
       {% else %}
@@ -84,11 +85,11 @@
 
   <div class="row">
     <div class="col-12 text-danger">
-      <h2 class="g_font">Распродажи</h2>
+      <h2 class="l_font">Распродажи</h2>
     </div>
   </div>
   <div class="row" >
-    {% for product in products_discounts %}
+    {% for product in sales %}
     <div class="col-sm-3 border text-danger" >
 
       <div class="row align-items-start justify-content-center" style="height:80px" >

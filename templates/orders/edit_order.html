@@ -1,0 +1,150 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container">
+    <div class="row mt-5 pt-3">
+        <div class="col-sm-8 row justify-content-center">
+    <h3>Введите данные для заказа # {{order_id}}</h3>
+    </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-sm-8">
+
+    <ul>
+        {% for item in cart_items %}
+        <li>
+           
+            {{item.product.model_name}} Х {{item.quantity}}
+            <img src="{{item.product.image.url}}" width="100" height="100" alt="{{item.product.model_name}}">
+            <span>{{ item.total_price}} руб. </span>
+        </li>
+        {% endfor %}    
+    </ul>
+    <!-- <p>Total: {{cart.get_total_price}} руб. </p> -->
+
+<!-- <form action="{% url 'order_create' %}" method ="POST" class ='order-form'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button type='submit'>Order</button>
+</form> -->
+
+<form action="{% url 'edit_order' order_id %}" method ="POST"> 
+    {% csrf_token %}
+    <!-- <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="first_name">Имя</label>
+        </div>
+        <div class="col-sm-6">
+    <input type="text" id="first_name" name="first_name" 
+        {% if user.is_authenticated %} 
+            value='{{user.first_name}}' 
+        {% endif %} required><br>
+        </div>
+    </div>
+    
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="last_name">Фамилия</label>
+            </div>
+            <div class="col-sm-6">
+    <input type="text" id="last_name" name="last_name" 
+        {% if user.is_authenticated %} 
+            value='{{user.last_name}}' 
+        {% endif %} required><br>
+        </div>
+    </div>
+
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="email">Электронная почта </label>
+        </div>
+        <div class="col-sm-6">
+    <input type="email" id="email" name="email" 
+        {% if user.is_authenticated %} 
+            value='{{user.email}}' 
+        {% endif %} required><br>
+        </div>
+    </div>
+    
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="phone">Контактный телефон</label>
+        </div>
+        <div class="col-sm-6">
+    <input type="text" id='phone' name='phone' required><br>
+        </div>
+    </div> -->
+    <div class="row">
+        <h3>Адрес доставки:</h3>
+    </div>
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="code">Индекс</label>
+        </div>
+        <div class="col-sm-6">
+    <input type="text" id='code' name='code' required><br>
+        </div>
+    </div>
+    
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="region">Область</label>
+        </div>
+        <div class="col-sm-6">
+    <input type="text" id='region' name='region' required><br>
+        </div>
+    </div>
+    
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="city">Город</label>
+        </div>
+        <div class="col-sm-6">
+    <input type="text" id='city' name='city' required><br>
+        </div>
+    </div>
+    
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="street">Улица</label>
+        </div>
+        <div class="col-sm-6">
+    <input type="text" id='street' name='street' required><br>
+        </div>
+    </div>
+    
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="building">Дом</label>
+        </div>
+        <div class="col-sm-6">
+    <input type="text" id='building' name='building' required><br>
+        </div>
+    </div>
+    
+    <div class="row p-1">
+        <div class="col-sm-6">
+    <label for="appartment">Квартира, если есть</label>
+        </div>
+        <div class="col-sm-6">
+    <input type="text" id='appartment' name='appartment'><br>
+        </div>
+    </div>
+    
+    <div class="row p-1 mb-3">
+        <div class="col-sm-6 offset-sm-6">
+            <div class="row">
+                <div class="col-sm-7">
+    <button type='submit'class="btn btn-danger btn-block" >Заказать</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    </form>
+</div>
+</div>
+</div>
+{% endblock %}

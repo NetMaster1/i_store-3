@@ -1,4 +1,63 @@
 {% extends 'base.html' %}
+{% load static %}
+
 {% block content %}
-<h1>Here goes credit card stripe</h1>
+
+<div class="container">
+    <div class="row mt-5 pt-3">
+        <h3>Введите ваши данные для оплаты</h3>
+    </div>
+    <div class="row">
+<form action="{% url 'edit_order' order_id %}" method="POST">
+    {% csrf_token %}
+    <div class="row p-1">
+        <div class="col-sm-6">
+            <label for="first_name">Имя владельца карты</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" id="first_name" name="first_name" {% if user.is_authenticated %}
+                value='{{user.first_name}}' {% endif %} required><br>
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col-sm-6">
+            <label for="last_name">Номер карты</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" id="number" name="number" {% if user.is_authenticated %}
+                {% endif %} required><br>
+        </div>
+    </div>
+
+    <div class="row p-1">
+        <div class="col-sm-6">
+            <label for="email">Срок действия карты </label>
+        </div>
+        <div class="col-sm-6">
+            <input type="terms" id="email" name="terms" {% if user.is_authenticated %}
+                {% endif %} required><br>
+        </div>
+    </div>
+    <div class="row p-1">
+        <div class="col-sm-6">
+            <label for="pid">PID</label>
+        </div>
+        <div class="col-sm-6">
+            <input type="text" id='pid' name='pid' required><br>
+        </div>
+    </div>
+
+    <div class="row p-1 mb-3">
+        <div class="col-sm-6 offset-sm-6">
+            <div class="row">
+                <div class="col-sm-7">
+                    <button type='submit' class="btn btn-danger btn-block"> Далее </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
+</div>
+</div>
 {% endblock %}
