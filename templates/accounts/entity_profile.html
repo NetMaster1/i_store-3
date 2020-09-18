@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container">
+    <div class="row pt-5 mt-5">
+
+        <form action="{% url 'entity_profile' %}" method="POST">
+            {% csrf_token %}
+            <div class="row p-1">
+            <div class="col-sm-6">
+                <label for="type">Организационно-правовая форма</label>
+            </div>
+            <div class="col-sm-6">
+                <input type="text" id="entity_type" name="entity_type" required><br>
+            </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="name">Название организации</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id="name" name="name" required><br>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="tax_id_number">ИНН</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id="tax_id_number" name="tax_id_number" required><br>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="phone">Контактный телефон</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='phone' name='phone' required><br>
+                </div>
+            </div>
+            <!-- <div class="row">
+                <h3>Юридический адрес:</h3>
+            </div>
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="code">Индекс</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='code' name='zip_code' required><br>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="region">Область</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='region' name='region' required><br>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="city">Город</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='city' name='city' required><br>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="street">Улица</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='street' name='street' required><br>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="building">Дом</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='building' name='building' required><br>
+                </div>
+            </div>
+
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="office">Помещение</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='office' name='office'><br>
+                </div>
+            </div> -->
+            <div class="row">
+                <h3>Банковские реквизиты:</h3>
+            </div>
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="bin">БИК</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='bin' name='bin'><br>
+                </div>
+            </div>
+            <div class="row p-1">
+                <div class="col-sm-6">
+                    <label for="bank_account">Расчетный счет</label>
+                </div>
+                <div class="col-sm-6">
+                    <input type="text" id='bank_account' name='bank_account'><br>
+                </div>
+            </div>
+
+            <div class="row p-1 mb-3">
+                <div class="col-sm-6 offset-sm-6">
+                    <div class="row">
+                        <div class="col-sm-7">
+                            <button type='submit' class="btn btn-danger btn-block">Ввести данные</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,99 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html lang="en">
+<meta charset="UTF-8">
+
+<head>
+
+    <style type="text/css">
+        @font-face {
+            font-family: "Azoft Sans Italic";
+            src: url("webfonts/azoft-sans-italic.ttf")
+        }
+
+        table,
+        h1 {
+            font-family: "Azoft Sans Italic";
+        }
+
+        table,
+        th,
+        td {
+            border: 1px solid grey;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Счет #{{order.id}} от {{order.created}}</h1>
+    <table style="width:100%">
+        <tr>
+            <td>Поставщик</td>
+            <td>ООО Ритейл</td>
+        </tr>
+        <tr>
+            <td>Юридический адрес</td>
+            <td>606460 Нижний Новгород ул. Канавинская д. 3 п. 603</td>
+        </tr>
+        <tr>
+            <td>Банк</td>
+            <td>ТОЧКА ПАО БАНКА «ФК ОТКРЫТИЕ»</td>
+        </tr>
+        <tr>
+            <td>БИК</td>
+            <td>044525999</td>
+        </tr>
+        <tr>
+            <td>Расчетный счет</td>
+            <td>40702810014500007297</td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <td>Грузополучатель</td>
+            <td>{{order.first_name}} {{order.last_name}}</td>
+        </tr>
+        <tr>
+            <td>Юридический адрес</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Банк</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>БИК</td>
+            <td></td>
+        </tr>
+        <tr>
+            <td>Расчетный счет</td>
+            <td></td>
+        </tr>
+    </table>
+    <br>
+    <table style="width:100%">
+        <tr>
+            <td>Наименование</td>
+            <td>Количество</td>
+            <td>Цена</td>
+            <td>Сумма</td>
+        </tr>
+        {% for item in invoice %}
+        <tr>
+            <td>{{item.brand}}{{item.product}}</td>
+            <td>{{item.quantity}}</td>
+            <td>{{item.price}}</td>
+            <td>{{item.sub_total}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+            <td>Всего к оплате</td>
+            <td>{{new_total}}</td>
+        </tr>
+
+    </table>
+
+</body>
+
+</html>

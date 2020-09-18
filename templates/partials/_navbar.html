@@ -55,8 +55,15 @@
         <!-- ======================================================= -->
 
         {% if user.is_authenticated %}
+        <li {% if 'dashboard' in request.path %} class="nav-item active" {% else %} class="nav-item" {% endif %}>
+        <a class="nav-link" href="{% url 'dashboard' %}">
+        <i class="fas fa-clipboard-check"></i>
+        Личный кабинет
+        </a>
+        </li>
+
         
-        <li {% if 'orders_history' in request.path %} 
+        <!-- <li {% if 'orders_history' in request.path %} 
         class="nav-item active" 
         {% else %} class="nav-item" 
         {% endif %}>
@@ -64,9 +71,9 @@
         <i class="fas fa-clipboard-check"></i> 
         Заказы
         </a>
-        </li>
+        </li> -->
 
-        <li {% if 'password' in request.path %} 
+        <!-- <li {% if 'password' in request.path %} 
         class="nav-item active" 
         {% else %} 
         class="nav-item" 
@@ -75,7 +82,7 @@
         <i class="fas fa-lock"></i> 
         Пароль
         </a>
-        </li>
+        </li> -->
 
         <li {% if 'logout' in request.path %} 
         class="nav-item active" 

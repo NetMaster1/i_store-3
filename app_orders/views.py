@@ -7,7 +7,7 @@ from .forms import OrderCreateForm
 from app_goods.models import Cart, CartItem
 from .models import Order, OrderItem
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 #from .tasks import order_created
 import datetime
 from .utils import render_to_pdf
@@ -43,6 +43,7 @@ def order_create(request):
             quantity=item.quantity,
             price=item.price
         )
+        order_item=OrderItem.objects.filter(order=order)
         # else:
         #     OrderItem.objects.create(
         #         order=order,
@@ -58,6 +59,8 @@ def order_create(request):
             # order_created.delay(order.id)
     context = {
             'order': order,
+            'order_item': order_item,
+
         }
     return render(request, 'orders/select_delivery_type.html', context)
 
@@ -74,7 +77,10 @@ def delivery_choice(request, order_id):
             context = {
                   'order': order,
               }
-            return render (request, 'orders/select_customer_type.html', context)
+            if request.user.is_authenticated:
+                return render(request, 'orders/select_payment_type.html', context)
+            else:
+                return render (request, 'orders/select_customer_type.html', context)
         else:
             order = Order.objects.get(id=order_id)
             context = {
@@ -95,7 +101,10 @@ def edit_order(request, order_id):
         context = {
             'order': order
         }
-        return render (request, 'orders/select_customer_type.html', context )
+        if request.user.is_authenticated:
+            return render(request, 'orders/select_payment_type.html', context)
+        else:
+            return render(request, 'orders/select_customer_type.html', context)
     else:
         return render(request, 'edit_oder.html')
         
@@ -104,20 +113,24 @@ def customer_choice(request, order_id):
      if 'customer' in request.GET:
         option = request.GET['customer']
         if option == 'person':
-            context = {
-                'order_id': order_id,
-            }
-            return render(request, 'orders/edit_customer_name.html', context)
-        else:
+            order = Order.objects.get(id=order_id)
             if request.user.is_authenticated:
-                order = Order.objects.get(id=order_id)
+                order.first_name = request.user.first_name
+                order.last_name = request.user.last_name
+                order.email = request.user.email
+                # order.phone = request.user.phone
+                order.save()
                 context = {
-                    'order': order
+                    'order': order,
                 }
                 return render(request, 'orders/select_payment_type.html', context)
             else:
-                return redirect('login')
-     
+                context = {
+                    'order_id': order_id,
+                }
+            return render(request, 'orders/edit_customer_name.html', context)
+        else:
+            return redirect ('login')
 
 def edit_customer_name (request, order_id):
     if request.method == "POST":
@@ -138,30 +151,30 @@ def anonymous_pick_up(request):
     return render(request, 'orders/payment.html')
 
 def payment_choice(request, order_id):
-    # checking if 'payment name is in request.GET from radiobuttons (payment.html)
-    if 'payment' in request.GET:
-        option = request.GET['payment']
-        if option == 'credit':
-            context ={
-                'order_id': order_id
-            }
-            return render(request, 'orders/payment_stripe.html', context)
-        elif option == 'cash':
-            order_items = OrderItem.objects.all().filter(order=order_id)
-            order = Order.objects.get(id=order_id)
-            context = {
-                'order_items': order_items,
-                'order': order
-            }
-            return render(request, 'inoice.html', context) 
-        else:
-            order_items = OrderItem.objects.all().filter(order=order_id)
-            order=Order.objects.get(id=order_id)
-            context = {
-                'order_items': order_items,
-                'order': order
-            }
-        return render(request, 'invoice.html', context)
+        # checking if 'payment name is in request.GET from radiobuttons (payment.html)
+        if 'payment' in request.GET:
+            option = request.GET['payment']
+            if option == 'credit':
+                context ={
+                    'order_id': order_id
+                }
+                return render(request, 'orders/payment_stripe.html', context)
+            elif option == 'cash':
+                order_items = OrderItem.objects.all().filter(order=order_id)
+                order = Order.objects.get(id=order_id)
+                context = {
+                    'order_items': order_items,
+                    'order': order
+                }
+                return render(request, 'invoice.html', context) 
+            else:
+                order_items = OrderItem.objects.all().filter(order=order_id)
+                order=Order.objects.get(id=order_id)
+                context = {
+                    'order_items': order_items,
+                    'order': order
+                }
+            return render(request, 'invoice.html', context)
 
 
 def logistics_choice(request, order_id):
@@ -211,8 +224,21 @@ class GeneratePDF(View):
             'invoice': invoice,
             'new_total': new_total
         }
-        pdf = render_to_pdf('pdf_invoice.html', data)
-        return HttpResponse(pdf, content_type='application/pdf')
+        if request.user.is_authenticated:
+            if Group.objects.filter(name='entities').exists():
+                group=Group.objects.get(name='entities').user_set.all()
+                if request.user in group:
+                    pdf = render_to_pdf('pdf_invoice_entity.html', data)
+                    return HttpResponse(pdf, content_type='application/pdf')
+                else:
+                    pdf = render_to_pdf('pdf_invoice.html', data)
+                    return HttpResponse(pdf, content_type='application/pdf')
+            else:
+                pdf = render_to_pdf('pdf_invoice.html', data)
+                return HttpResponse(pdf, content_type='application/pdf')
+        else:
+            pdf = render_to_pdf('pdf_invoice.html', data)
+            return HttpResponse(pdf, content_type='application/pdf')
 
 class DownloadPDF(View):
     # def get(self, request, *args, **kwargs):

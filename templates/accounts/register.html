@@ -3,7 +3,7 @@
 {% block content %}
 
     <div class="container mt-5 mb-5 pt-5">
-      <div class="row bg-danger">
+      <div class="row">
         <div class="col-md-6 mx-auto">
           <div class="card">
             <div class="card-header bg-danger text-white">
@@ -15,9 +15,10 @@
                 <!-- Alerts -->
                 {% include 'partials/_alerts.html' %}
                 <!-- ========================================== -->
-                <form action="{% url 'register' %}" method='POST'>
+                
+              <form action="{% url 'register' %}" method='POST'>
                   {% csrf_token %}
-                  <div class="form-group">
+                <div class="form-group">
                   <label for="first_name" class="text-danger">Имя</label>
                   <input type="text" name="first_name" class="form-control" required>
                 </div>
@@ -41,7 +42,16 @@
                   <label for="password2" class="text-danger">Подтвердить пароль</label>
                   <input type="password" name="password2" class="form-control" required>
                 </div>
-                <input type="submit" value="Зарегистрироваться" class="btn btn-secondary btn-block">
+              
+                    <button class="button is-success" type="submit" value="Signup">Signup</button>
+
+                  <label class="checkbox text-danger">
+                  <input type="checkbox" id="checkbox" name="customer_type" value="entity">
+                    Укажите, если вы регистрируетесь как юридическое лицо
+                  </label> 
+                <!-- <div>
+                <input type="submit" value="Зарегистрироваться" class="btn btn-danger btn-block">
+                </div> -->
               </form>
 <!-- ======================================================== -->
             </div>
