@@ -73,9 +73,9 @@ def listing_lte(request):
 
 
 def listing_accessory(request):
-    accessories = Accessory.objects.all()
+    queryset_list = Accessory.objects.all()
     context = {
-        'accessories': accessories,
+        'queryset_list': queryset_list,
     }
     return render(request, 'cart/listing_accessory.html', context)
 

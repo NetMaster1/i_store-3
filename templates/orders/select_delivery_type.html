@@ -26,9 +26,9 @@
 </form>
 </div>
 <div class="col-sm-7 bg-light border">
-Заказ# {{order.id}}
+Заказ# {{order.id}}<br>
 {% for item in order_item %}
-{{item.brand}} {{item.product}} {{item.quantity}} {{item.price}}
+{{item.brand}} {{item.product}} шт. {{item.quantity}} цена {{item.price}} руб.<br>
 
 {% endfor %}
 </div>

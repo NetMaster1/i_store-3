@@ -209,6 +209,7 @@ class Product(models.Model):
 
 class Accessory(models.Model):
     name = models.CharField(max_length=250)
+    brand = models.CharField(max_length=250, blank=True)
     slug = models.SlugField(max_length=100, null=True, unique=True)
     link = models.ManyToManyField(Product)
     image = models.ImageField(upload_to='photos', blank=True)
@@ -219,9 +220,9 @@ class Accessory(models.Model):
         ordering = ('name',)
         verbose_name = 'accessory'
         verbose_name_plural = 'accessories'
-    # def get_url(self):
-    #     #return reverse('product_detail', args=[self.category.slug, self.slug])
-    #     return reverse('accessory_detail', args=[self.id])
+    def get_url(self):
+        #return reverse('product_detail', args=[self.category.slug, self.slug])
+        return reverse('accessory_detail', args=[self.id])
 
     def __str__(self):
         return self.name

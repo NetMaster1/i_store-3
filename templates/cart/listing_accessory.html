@@ -7,57 +7,116 @@
 <!-- Checkboxes -->
 <!-- ===================================================== -->
 <div class="container">
-
-        <div class="row mt-4 pt-5">
-            <div class="col-12">
-                <nav aria-label="breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Текущая</li>
-                    </ol>
-                </nav>
-            </div>
+    <div class="row mt-4 pt-5">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Текущая</li>
+                </ol>
+            </nav>
         </div>
+    </div>
 
-    <div class="row">
-        <div class="col-3 bg-light">
-            <form action="{% url 'search_accessory' %}">
+    <div class="row ">
+        <div class="col-3 bg-light rounded">
+            <form action="{% url 'search_smartphone' %}">
                 {% csrf_token %}
                 <ul>
-                    <div>
-                        <ul>
-                            <li><label for="manufacture">Производитель</label></li>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Samsung"> Samsung <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Honor"> Honor <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Huawei"> Huawei <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Apple"> Apple <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Xiaomi"> Xiaomi <br>
-                            <input type="checkbox" id="manufacture" name="manufacture" value="Sony"> Sony <br>
-
-                    </div>
+                    <li><label for="manufacture">Производитель</label></li>
+                    <input type="checkbox" id="manufacture" name="manufacture" value="Samsung"> Samsung
+                    <input type="checkbox" id="manufacture" name="manufacture" value="Honor"> Honor <br>
+                    <input type="checkbox" id="manufacture" name="manufacture" value="Huawei"> Huawei
+                    <input type="checkbox" id="manufacture" name="manufacture" value="Apple"> Apple <br>
+                    <input type="checkbox" id="manufacture" name="manufacture" value="Xiaomi"> Xiaomi
+                    <input type="checkbox" id="manufacture" name="manufacture" value="Sony"> Sony <br>
+                    <input type="checkbox" id="manufacture" name="manufacture" value="ZTE"> ZTE
+                    <input type="checkbox" id="manufacture" name="manufacture" value="BQ"> BQ <br>
                 </ul>
                 <ul>
-                    <div>
-                        <ul>
-                            <li><label for="price">Цена</label></li>
-                            <input type="checkbox" id="price" name="price" value="5000.00"> 5000 <br>
-                            <input type="checkbox" id="price" name="price" value="7000.00"> 7000 <br>
-                            <input type="checkbox" id="price" name="price" value="9000.00"> 9000 <br>
-                            <input type="checkbox" id="price" name="price" value="18000.00"> 18000 <br>
-
-                    </div>
+                    <li><label for="ram">Размер дисплея</label></li>
+                    до <input type="checkbox" id="display" name="display" value="5"> 5 дюймов <br>
+                    до <input type="checkbox" id="display" name="display" value="6"> 6 дюймов <br>
+                    до <input type="checkbox" id="display" name="display" value="7"> 7 дюймов
                 </ul>
                 <ul>
-                    <div>
-                        <ul>
-                            <li><label for="ram">Оперативная память</label></li>
-                            <input type="checkbox" id="ram" name="ram" value="1"> 1 <br>
-                            <input type="checkbox" id="ram" name="ram" value="2"> 2 <br>
-                            <input type="checkbox" id="ram" name="ram" value="3"> 3 <br>
-                            <input type="checkbox" id="ram" name="ram" value="4"> 4 <br>
-
-                    </div>
+                    <li><label for="price">Цена</label></li>
+                    до <input type="checkbox" id="price" name="price" value="3000.00"> 3000 руб. <br>
+                    до <input type="checkbox" id="price" name="price" value="5000.00"> 5000 руб. <br>
+                    до <input type="checkbox" id="price" name="price" value="10000.00"> 10000 руб. <br>
+                    до <input type="checkbox" id="price" name="price" value="15000.00"> 15000 руб. <br>
+                    до <input type="checkbox" id="price" name="price" value="20000.00"> 20000 руб. <br>
+                    до <input type="checkbox" id="price" name="price" value="25000.00"> 25000 руб. <br>
+                    до <input type="checkbox" id="price" name="price" value="30000.00"> 30000 руб. <br>
                 </ul>
+                <ul>
+                    <li><label for="ram">Оперативная память</label></li>
+                    <input type="checkbox" id="ram" name="ram" value="1"> 1Gb
+                    <input type="checkbox" id="ram" name="ram" value="2"> 2GB
+                    <input type="checkbox" id="ram" name="ram" value="3"> 3GB
+                    <input type="checkbox" id="ram" name="ram" value="4"> 4Gb
+                    <input type="checkbox" id="ram" name="ram" value="4"> 6Gb
+                </ul>
+                <ul>
+                    <li><label for="ram">Встроенная память</label></li>
+                    <input type="checkbox" id="hdd" name="hdd" value="8"> 8Gb
+                    <input type="checkbox" id="hdd" name="hdd" value="16"> 6GB
+                    <input type="checkbox" id="hdd" name="hdd" value="32"> 32GB
+                    <input type="checkbox" id="hdd" name="hdd" value="64"> 64Gb
+                    <input type="checkbox" id="hdd" name="hdd" value="128"> 128Gb
+                    <input type="checkbox" id="hdd" name="hdd" value="256"> 256Gb
+                </ul>
+                <ul>
+                    <li><label for="ram">Количество ядер процессора</label></li>
+                    <input type="checkbox" id="processor_core" name="processor_core" value="1"> 1 ядро
+                    <input type="checkbox" id="processor_core" name="processor_core" value="2"> 2 ядра
+                    <input type="checkbox" id="processor_core" name="processor_core" value="4"> 4 ядра
+                    <input type="checkbox" id="processor_core" name="processor_core" value="8"> 8 ядер
+                    <input type="checkbox" id="processor_core" name="processor_core" value="16"> 16 ядер
+                </ul>
+                <ul>
+                    <li><label for="ram">Частота процессора</label></li>
+                    <input type="checkbox" id="processor_frequency" name="processor_frequency" value="1000"> 1 Ghz
+                    <input type="checkbox" id="processor_frequency" name="processor_frequency" value="2"> 2 Ghz
+                    <input type="checkbox" id="processor_frequency" name="processor_frequency" value="4"> 4 Ghz
+                </ul>
+                <ul>
+                    <li><label for="ram">Емкость АКБ</label></li>
+                    <input type="checkbox" id="battery" name="battery" value="1000"> 1000 mA
+                    <input type="checkbox" id="battery" name="battery" value="2000"> 2000 mA <br>
+                    <input type="checkbox" id="battery" name="battery" value="3000"> 3000 mA
+                    <input type="checkbox" id="battery" name="battery" value="4000"> 4000 mA <br>
+                    <input type="checkbox" id="battery" name="battery" value="5000"> 5000 mA
+                </ul>
+                <ul>
+                    <li><label for="ram">Разрешение основной камеры</label></li>
+                    <input type="checkbox" id="camera_1" name="camera_1" value="5000"> 5 mpx
+                    <input type="checkbox" id="camera_1" name="camera_1" value="10000"> 10 mpx <br>
+                    <input type="checkbox" id="camera_1" name="camera_1" value="15000"> 15 mpx
+                    <input type="checkbox" id="camera_1" name="camera_1" value="20000"> 20 mpx <br>
+                    <input type="checkbox" id="camera_1" name="camera_1" value="30000"> 30 mpx
+                    <input type="checkbox" id="camera_1" name="camera_1" value="50000"> 50 mpx
+                </ul>
+                <ul>
+                    <li><label for="ram">Разрешение фронтальной камеры</label></li>
+                    <input type="checkbox" id="front_camera" name="front_camera" value="5000"> 5 mpx
+                    <input type="checkbox" id="front_camera" name="front_camera" value="10000"> 10 mpx <br>
+                    <input type="checkbox" id="front_camera" name="front_camera" value="15000"> 15 mpx
+                    <input type="checkbox" id="front_camera" name="front_camera" value="20000"> 20 mpx <br>
+                    <input type="checkbox" id="front_camera" name="front_camera" value="30000"> 30 mpx
+                    <input type="checkbox" id="front_camera" name="front_camera" value="50000"> 50 mpx
+                </ul>
+                <ul>
+                    <li><label for="ram">Тип связи</label></li>
+                    <input type="checkbox" id="com_type" name="com_type" value="3G"> 3G
+                    <input type="checkbox" id="com_type" name="com_type" value="4G"> 4G
+                    <input type="checkbox" id="com_type" name="com_type" value="5G"> 5G
+                </ul>
+                <ul>
+                    <li><label for="ram">NFC</label> <input type="checkbox" id="nfc" name="nfc" value="nfc"></li>
+
+                </ul>
+
                 <input type="submit" value="Применить" class="btn btn-danger btn-block">
             </form>
         </div>
@@ -67,9 +126,9 @@
         <div class="col-9">
             <div class="row">
                 {% for product in queryset_list %}
-                <div class="col-4 border text-danger">
-                    <div class="row align-items-start justify-content-center" style="height:80px">
-                        <h5>{{product.brand}} {{product.model_name}} {{product.color}}<br>
+                <div class="col-4 border text-danger ">
+                    <div class="row align-items-center justify-content-center p-2" style="height:80px">
+                        <h5 class="text-center ">{{product.brand}} {{product.model_name}}{{product.color}}
                             {{product.ram}}/{{product.hdd}}Gb</h5>
                     </div>
                     <div class="row align-items-center justify-content-center" style="height:270px">
@@ -82,7 +141,7 @@
                     <div class="row align-items-center justify-content-center" style="height:120px">
                         <div class="col">
                             <p>
-                            <h4>{{product.price}} руб.</h4>
+                            <h4 class="text-center">{{product.price}} руб.</h4>
                             </p>
                             {% if product.stock <= 0 %}
                             <p class="text-justify product_text"><b>Out of Stock</b></p>
@@ -102,8 +161,6 @@
         </div>
     </div>
 
-
-
     <!-- Paginator -->
     <!-- ===================================================================== -->
     <div class="col-10 mx-auto my-2 text-center">
@@ -116,6 +173,7 @@
         {% endif %}
     </div>
     <br>
+
 </div>
 
 {% endblock %}
