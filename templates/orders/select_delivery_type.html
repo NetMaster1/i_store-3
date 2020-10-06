@@ -11,7 +11,7 @@
   <label for="delivery"class="text-danger">Доставка</label>
   </div>
   <div>
-  <input type="radio" name="delivery" value="address" id="delivery"> 
+  <input type="radio" name="delivery" value="address" id="delivery" checked> 
   <span class="text-danger">Доставка по адресу</span>
   </div>
   <div>
@@ -25,12 +25,20 @@
   <input type="submit" value="Выберите спосбо доставки"class="btn btn-danger m-1">
 </form>
 </div>
-<div class="col-sm-7 bg-light border">
-Заказ# {{order.id}}<br>
-{% for item in order_item %}
-{{item.brand}} {{item.product}} шт. {{item.quantity}} цена {{item.price}} руб.<br>
 
-{% endfor %}
+<div class="col-sm-7 bg-light border">
+Заказ # <strong>{{order.id}}</strong><br>
+{% for item in order_items %}
+<div class="row">
+  <div class="col-1"> {{item.brand}} </div> 
+  <div class="col-3">{{item.product}}</div> 
+  <div class="col-2">{{item.quantity}} шт.</div>
+  <div class="col-3">{{item.price}} руб.</div>
+  <div class="col-3">Всего: {{item.sub_total}} руб.</div>
+</div>
+{% endfor %}<br>
+Всего: {{new_total}} руб.
+
 </div>
 </div>
 

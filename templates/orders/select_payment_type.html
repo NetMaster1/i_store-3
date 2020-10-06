@@ -10,7 +10,7 @@
 <form action="{% url 'payment_choice' order.id %}">
     <div>
       <label for="payment">Способ оплаты</label><br>
-      <input type="radio" name="payment" value="credit" id="payment">Credit Card<br>
+      <input type="radio" name="payment" value="credit" id="payment" checked >Credit Card<br>
       <input type="radio" name="payment" value="cash" id="payment">Платеж при получении<br>
       <input type="radio" name="payment" value="money_trasfer" id="payment">Банковский перевод<br>
 

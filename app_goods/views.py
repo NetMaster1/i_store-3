@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from . models import Cart, CartItem, Accessory, Product, Brand, Color, Operator
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
 
 
 def index(request):
@@ -28,6 +29,11 @@ def listing(request):
     # if smartphones_page!=None:
         #category_page=get_object_or_404(Category, slug=category_slug)
     queryset_list = Product.objects.all()
+    
+    paginator = Paginator(queryset_list, 12)
+    page = request.GET.page('page')
+    queryset_list = paginator.get_page(page)
+ 
     # else:
     #     products=Product.objects.all().filter(available=True)
     context = {
@@ -41,7 +47,12 @@ def listing(request):
 
 
 def listing_smartphone(request):
-    queryset_list = Product.objects.filter(category=2)
+    queryset = Product.objects.filter(category=2)
+    paginator = Paginator(queryset, 2)
+
+    page_number = request.GET.get('page')
+    queryset_list = paginator.get_page(page_number)
+
     context = {
         'queryset_list': queryset_list,
     }
@@ -244,8 +255,8 @@ def search_lte(request):
     return render(request, 'cart/listing_lte.html', context)
 
     # Cart Functions
+    # Creating a cart with unique session key
 # =================================================
-
 
 def _cart_id(request):
     cart = request.session.session_key
@@ -256,7 +267,6 @@ def _cart_id(request):
 # =====================================================
     # Adding single product to cart
 # =================================================
-
 
 def add_cart(request, product_slug):
     # if product_id in request.GET:

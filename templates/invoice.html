@@ -24,7 +24,7 @@
                     {% for item in order_items %}
                         {{item.product}}: {{item.price}}<br>
                     {% endfor %}
-            <a href="{% url 'GeneratePDF' pk=order.id %}">Cформировать счет</a><br>
+            <a href="{% url 'GeneratePDF' pk=order.id %}" target="_blank">Cформировать счет</a><br>
             <a href="{% url 'DownloadPDF' pk=order.id %}">Загрузить счет</a><br>
            
 

@@ -6,15 +6,15 @@ from datetime import datetime
 
 class Order(models.Model):
     corporate = models.BooleanField(default=False) #True is for private person
-    first_name=models.CharField(max_length=50, blank=True)
-    last_name=models.CharField(max_length=50, blank=True)
+    first_name=models.CharField(max_length=100, blank=True)
+    last_name=models.CharField(max_length=100, blank=True)
     email=models.EmailField(blank=True)
-    phone=models.CharField(max_length=50, blank=True)
-    postal_code=models.CharField(max_length=50, blank=True)
+    phone=models.CharField(max_length=100, blank=True)
+    postal_code=models.CharField(max_length=100, blank=True)
     region=models.CharField(max_length=150, blank=True)
-    city=models.CharField(max_length=50, blank=True)
+    city=models.CharField(max_length=100, blank=True)
     street=models.CharField(max_length=100, blank=True)
-    building=models.CharField(max_length=50, blank=True)
+    building=models.CharField(max_length=100, blank=True)
     appartment = models.CharField(max_length=50, blank=True)
     created = models.DateTimeField(auto_now_add=True, blank=True)
     # updated=models.DateTimeField(default=datetime.now, blank=True)

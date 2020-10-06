@@ -21,29 +21,32 @@ import xhtml2pdf.pisa as pisa
 from io import BytesIO
 from django.core.mail import send_mail, EmailMessage
 from pr_dir.settings import EMAIL_HOST_USER
+from django.core.exceptions import ObjectDoesNotExist
+from app_goods.views import _cart_id
 
-def _cart_id(request):
-    cart = request.session.session_key
-    if not cart:
-        cart = request.session.create()
-    return cart
+# def _cart_id(request):
+#     cart = request.session.session_key
+#     if not cart:
+#         cart = request.session.create()
+#     return cart
 
 def order_create(request):
     # if request.user.is_authenticated:
-    order = Order.objects.create()
-    order.save()
-    cart = Cart.objects.get(cart_id=_cart_id(request))
-    cart_items = CartItem.objects.all().filter(cart=cart)
-    for item in cart_items:
-        # if item.product:
-        OrderItem.objects.create(
-            order=order,
-            product=item.product,
-            brand=item.brand,
-            quantity=item.quantity,
-            price=item.price
-        )
-        order_item=OrderItem.objects.filter(order=order)
+    if Cart.objects.filter(cart_id=_cart_id(request)).exists():
+        cart = Cart.objects.get(cart_id=_cart_id(request))
+        order = Order.objects.create()
+        order.save()
+        cart_items = CartItem.objects.all().filter(cart=cart)
+        for item in cart_items:
+            # if item.product:
+            OrderItem.objects.create(
+                order=order,
+                product=item.product,
+                brand=item.brand,
+                quantity=item.quantity,
+                price=item.price
+            )
+        order_items=OrderItem.objects.filter(order=order)
         # else:
         #     OrderItem.objects.create(
         #         order=order,
@@ -53,16 +56,36 @@ def order_create(request):
         #         price=item.price
         #     )
 
-      # clear the cart
-            # cart.clear()
+            # clear the cart
+            #cart_items.delete()
+        cart.delete()
             # launch asynchronous task
             # order_created.delay(order.id)
-    context = {
-            'order': order,
-            'order_item': order_item,
-
+        new_total = 0.00
+        for item in order_items:
+            line_total = float(item.price)*item.quantity
+            new_total += line_total
+        context = {
+                'order': order,
+                'order_items': order_items,
+                'new_total': new_total,
         }
-    return render(request, 'orders/select_delivery_type.html', context)
+        return render(request, 'orders/select_delivery_type.html', context)
+    else:
+        order = Order.objects.last()
+        # last = order.count()
+        order_items = OrderItem.objects.filter(order=order)
+        # order = Order.objects.get(id=last)
+        new_total = 0.00
+        for item in order_items:
+            line_total = float(item.price)*item.quantity
+            new_total += line_total
+        context = {
+            'order': order,
+            'order_items': order_items,
+            'new_total': new_total,
+        }
+        return render(request, 'orders/select_delivery_type.html', context)
 
 def delivery_choice(request, order_id):
     if 'delivery' in request.GET: #checking if 'delivery name is in request.GET from radiobuttons (delivery.html)

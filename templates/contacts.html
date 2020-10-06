@@ -3,7 +3,19 @@
 {% block content%}
 
 <div class="container">
-<div class="row pt-5">
+
+<div class="row mt-4 pt-5">
+<div class="col-12">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Текущая</li>
+        </ol>
+    </nav>
+</div>
+</div>
+
+<div class="row bg-light m-1 mb-5">
     <div class="col-sm-8">
         <p><h5>ООО РИТЕЙЛ <br>
             ИНН 5257173237 <br>

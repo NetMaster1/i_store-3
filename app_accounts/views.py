@@ -7,14 +7,6 @@ from django.contrib.auth import update_session_auth_hash, authenticate
 from app_orders.models import Order
 from .models import Person, Entity
 
-# register = template.Library()
-# @register.filter(name='has_group')
-# def has_group(user, entities):
-#     group = Group.objects.get(name='entities')
-#     return True if group in user.groups.all() else False
-
-
-# Create your views here.
 def register(request):
     if request.method=='POST':
         #Get from values
@@ -73,25 +65,24 @@ def register(request):
                         if request.user in group:
                             entity = Entity.objects.get(user=request.user)
                             context = {
-                            'entity': entity,
-                            'group': group
+                                'entity': entity,
+                                'group': group
                             }
-                            messages.success(request, 'You are now registered. Please log in')
-                            return render(request, 'accounts/entity_profile.html', context)
+                            messages.success(request, 'Вы успешно зарегистрированы как юр.лицо. Пожалуйста введите свои реквизиты.')
+                            return redirect ('entity_profile')
+                            # return render(request, 'accounts/entity_profile.html', context)
                         else:
                             person = Person.objects.get(user=request.user)
                             context = {
                             'person': person,
                         }
-                        messages.success(request, 'You are now registered. Please log in')
                         return render(request, 'accounts/dashboard.html', context)
                     else:
                         person = Person.objects.get(user=request.user)
                         context = {
                             'person': person,
                         }
-                        messages.success(
-                            request, 'You are now registered. Please log in')
+                        #return redirect ('dashboard')
                         return render(request, 'accounts/dashboard.html', context)
                       
 
@@ -113,29 +104,48 @@ def login(request):
 
         if user is not None:
             auth.login(request, user)
-            messages.success(request, 'You are logged in now')
+            #messages.success(request, 'Вы вошли в свой аккаунт.')
 
-            if Person.objects.filter(user=request.user).exists():
-                person=Person.objects.get(user=request.user)
-                context = {
-                    'person': person
-                }
-                return render(request, 'accounts/dashboard.html', context)
-            else:
-                entity = Entity.objects.get(user=request.user)
-                context = {
-                    'entity': entity,
-                }
-            return render (request, 'accounts/dashboard.html', context)
+            # if Person.objects.filter(user=request.user).exists():
+            #     person=Person.objects.get(user=request.user)
+            #     context = {
+            #         'person': person
+            #     }
+            return redirect ('dashboard')
+               # return render(request, 'accounts/dashboard.html', context)
+            # else:
+            #     entity = Entity.objects.get(user=request.user)
+            #     context = {
+            #         'entity': entity,
+            #     }
+            # #return redirect ('dashboard')
+            # return render (request, 'accounts/dashboard.html', context)
         else:
-            messages.error(request, "Invalid credentials. Please, try again")
+            messages.error(request, "Неверные данные. Пожалуйста, проверьте данные и попробуйте еще раз.")
             return redirect ('login')
     else:
+        #return redirect ('login')
         return render (request, 'accounts/login.html')
+
+def dashboard(request):
+    if request.user.is_authenticated:
+        try:
+            entity = Entity.objects.get(user=request.user)
+            context = {
+                'entity': entity
+            }
+        except:
+            person = Person.objects.get(user=request.user)
+            context = {
+                'person': person
+            }
+        return render(request, 'accounts/dashboard.html', context)
+    else:
+        return redirect('index')
 
 def logout(request):
         auth.logout(request)
-        messages.success(request, 'You are now logged out')
+        #messages.success(request, 'Вы вышли из своего аккаунта')
         return redirect('index')
         
 # def person_profile(request):
@@ -174,26 +184,8 @@ def entity_profile(request):
             'entity': entity,
         }
         return render(request, 'accounts/dashboard.html', context)
-        
-
-        entity.save()
-        return render(request, 'accounts/dashboard.html')
-
-def dashboard(request):
-    if request.user.is_authenticated:
-        try:
-            entity = Entity.objects.get(user=request.user)
-            context = {
-                'entity': entity
-            }
-        except:
-            person = Person.objects.get(user=request.user)
-            context = {
-                'person': person
-            }
-        return render (request, 'accounts/dashboard.html', context)
     else:
-        return redirect('index')
+        return render (request, 'accounts/entity_profile.html')
 
 def password_change (request):
     if request.user.is_authenticated:

@@ -2,46 +2,60 @@
 {% load static %}
 {% block content %}
 
-<div class="container"><br>
-  <div class="row bg-light mt-5">
-  <!-- <div class="row align-items-center justify-content-center bg-light pt-5 mt-5"  style="height:50px"> -->
-    <div class="col">
-      <h4>Фото</h4>
-    </div>
-    <div class="col">
-      <h4>Наименование</h4>
-    </div>
-    <div class="col">
-      <h4>Цена</h4>
-    </div>
-    <div class="col">
-      <h4>Количество</h4>
-    </div>
-    <div class="col">
-      <h4>Изменить</h4>
-    </div>
-    <div class="col">
-      <h4>Сумма</h4>
-    </div>
-  </div>
+<div class="container">
 
-<!-- Empty Cart -->
-<!-- ========================================================== -->
-
-{% if not cart_items %}
-    <div class="row jusify-content-right">
+          <div class="row mt-4 pt-5">
+            <div class="col-12">
+              <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{% url 'index' %}">Главная</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">Текущая</li>
+                </ol>
+              </nav>
+            </div>
+          </div>
+  <!-- Empty Cart -->
+  <!-- ========================================================== -->
+  {% if not cart_items %}
+  <div class="row bg-light m-1 p-2 align-items-center">
+      <div class="col-8">
       <h1>
         Ваша корзина пуста
       </h1>
     </div>
-    <div class="row align-items-center" style="height:100px">
+
+    <div class="col-4  ">
       <a href="{% url 'index' %}" class="btn btn-danger">Продолжить покупки</a>
     </div>
-  {% else %} 
+  </div>
+    {% else %}
+
+  <!-- <div class="row align-items-center justify-content-center bg-light pt-5 mt-5"  style="height:50px"> -->
+    <div class="row mt-3 mb-3">
+    <div class="col-sm-2">
+      <h4 class="text-left">Фото</h4>
+    </div>
+    <div class="col-sm-22">
+      <h4 class="text-center">Наименование</h4>
+    </div>
+    <div class="col-sm-2">
+      <h4 class="text-center">Цена</h4>
+    </div>
+    <div class="col-sm-2">
+      <h4>Количество</h4>
+    </div>
+    <div class="col-sm-2">
+      <h4 class="text-center">Изменить</h4>
+    </div>
+    <div class="col-sm-2">
+      <h4 class="text-right">Сумма</h4>
+    </div>
+  </div>
+
 <!-- CartItems -->
 <!-- ================================================================ -->
   {% for cart_item in cart_items %}
-  <div class="row align-items-center justify-content-right"  style="height:100px">
+  <div class="row align-items-center bg-light" style="height:130px">
       <div class="col">
         <a href="{{cart_item.get_url}}">
           <img src="{{cart_item.image.url}}" width="50" alt="">
@@ -56,7 +70,6 @@
       <div class="col">
         {{cart_item.quantity}}
       </div>
-      
         <div class="col">
           <!-- {% if cart_item.quantity < cart_item.product.stock %} 
           {% else %}
@@ -69,7 +82,6 @@
           </div>
           <div class="col">
           <a href="{% url 'remove_from_cart' cart_item.slug %}" class="text-danger">
-
             <i class="fas fa-minus-circle"></i>
           </a>
           </div>
@@ -78,24 +90,29 @@
             <i class="fas fa-trash-alt"></i>
           </a>
         </div>
+
         </div>
       </div>
       <div class="col">
         {{cart_item.sub_total}}&nbsp; руб.
       </div>
       </div>
+    <div class="row"><br></div>
     {% endfor %} 
    
-    
- 
 <!-- Total Sum & quantity
 ==================================================================== -->
 <div class="row align-items-center justify-content-right"  style="height:100px">
-  <div class="col justify-content-right">
-    Всего товаров на сумму: <strong>{{new_total}}&nbsp;руб.</strong>
+  <div class="col-8 justify-content-right">
+    <h4>Всего товаров на сумму: <strong>{{new_total}}&nbsp;руб.</strong></h4>
   </div>
-  <div class="col">
-    <a href="{% url 'order_create' %}" class="btn btn-danger">Заказать</a>
+
+  <div class="col-2">
+    <a href="{% url 'index' %}" class="btn btn-danger btn-block">Добавить</a>
+  </div>
+
+  <div class="col-2">
+    <a href="{% url 'order_create' %}" class="btn btn-danger btn-block">Заказать</a>
   </div>
 </div>
 {% endif %}
