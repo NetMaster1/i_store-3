@@ -158,20 +158,80 @@ def gen_search(request):
 
 
 def search_smartphone(request):
-    queryset_list = Product.objects.filter(category=2)
+
+    queryset_list = Product.objects.filter(category=2).order_by('price')
     if 'manufacture' in request.GET:
         manufacturers = request.GET.getlist('manufacture', None)
         if manufacturers:  # if checked
             brand_names = Brand.objects.filter(name__in=manufacturers)
             queryset_list = queryset_list.filter(brand__in=brand_names)
-    if 'price' in request.GET:
-        price = request.GET['price']
-        if price:  # if checked
-            queryset_list = queryset_list.filter(price__lte=price)
+
+    #checking if 'price' name is in request.GET from radiobuttons (listing_smartphone.html)
+    if 'price' in request.GET: 
+        option=request.GET['price']
+        if option == 'all':
+            context = {
+                 'queryset_list': queryset_list,
+             }
+        elif option == '3000-5000':
+            queryset_list = queryset_list.filter(price__gte=3000, price__lte=5000)
+        elif option == '5000-7000':
+            queryset_list = queryset_list.filter(price__gte=5000, price__lte=7000)
+        elif option == '7000-10000':
+            queryset_list = queryset_list.filter(price__gte=7000, price__lte=10000)
+        elif option == '10000-15000':
+            queryset_list = queryset_list.filter(price__gte=10000, price__lte=15000)
+        elif option == '15000-20000':
+            queryset_list = queryset_list.filter(price__gte=15000, price__lte=20000)
+
+    # if 'price' in request.GET:
+    #     price = request.GET['price']
+    #     if price:  # if checked
+    #         queryset_list = queryset_list.filter(price__lte=price)
+
+    # if 'price' in request.GET:
+    #     price = request.GET.getlist('price', None)
+    #     if price:  # if checked
+    #         queryset_list = queryset_list.filter(price__gte=price[0], price__lte=price[-1])#range between first & last object in list
+
     if 'ram' in request.GET:  # if checked
-        ram = request.GET['ram']
-        if ram:
-            queryset_list = queryset_list.filter(ram__lte=ram)
+        ram = request.GET.getlist('ram', None)
+        if ram:  # if checked
+            queryset_list = queryset_list.filter(ram__in=ram)
+
+    if 'hdd' in request.GET:  # if checked
+        hdd = request.GET.getlist('hdd', None)
+        if hdd:  # if checked
+            queryset_list = queryset_list.filter(hdd__in=hdd)
+
+    if 'processor_core' in request.GET:  # if checked
+        processor_core = request.GET.getlist('processor_core', None)
+        if processor_core:  # if checked
+            queryset_list = queryset_list.filter(processor_core__in=processor_core)
+
+    if 'processor_frequency' in request.GET:  # if checked
+        processor_frequency = request.GET.getlist('processor_frequency', None)
+        if processor_frequency:  # if checked
+            queryset_list = queryset_list.filter(processor_frequency__in=processor_frequency)
+
+     if 'battery' in request.GET: 
+        option=request.GET['battery']
+        if option == 'all':
+            context = {
+                 'queryset_list': queryset_list,
+             }
+        elif option == 'lower 2000':
+            queryset_list = queryset_list.filter(battery__lte=2000)
+        elif option == '2000-3000':
+            queryset_list = queryset_list.filter(price__gte=5000, price__lte=7000)
+        elif option == '7000-10000':
+            queryset_list = queryset_list.filter(price__gte=7000, price__lte=10000)
+        elif option == '10000-15000':
+            queryset_list = queryset_list.filter(price__gte=10000, price__lte=15000)
+        elif option == '15000-20000':
+            queryset_list = queryset_list.filter(price__gte=15000, price__lte=20000)
+
+
     context = {
         'queryset_list': queryset_list,
     }
@@ -185,10 +245,12 @@ def search_smartwatch(request):
         if manufacturers:  # if checked
             brand_names = Brand.objects.filter(name__in=manufacturers)
             queryset_list = queryset_list.filter(brand__in=brand_names)
+
     if 'price' in request.GET:
         price = request.GET['price']
         if price:  # if checked
             queryset_list = queryset_list.filter(price__lte=price)
+           
     if 'ram' in request.GET:  # if checked
         ram = request.GET['ram']
         if ram:

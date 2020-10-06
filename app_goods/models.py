@@ -168,6 +168,7 @@ class Product(models.Model):
     display_color = models.BooleanField(default=True)
     hdd = models.IntegerField(default=0)
     ram = models.IntegerField(default=0)
+    # battery = models.IntegerField(default=0)
     camera_1 = models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0)
     camera_2 = models.DecimalField(max_digits=5, decimal_places=2, blank=True, default=0)
     front_camera = models.DecimalField(max_digits=5, decimal_places=2, default=0)

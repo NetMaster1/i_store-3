@@ -40,14 +40,25 @@
                     до <input type="checkbox" id="display" name="display" value="7"> 7 дюймов
                 </ul>
                 <ul>
-                    <li><label for="price">Цена</label></li>
+                    <!-- <li><label for="price">Цена</label></li>
                     до <input type="checkbox" id="price" name="price" value="3000.00"> 3000 руб. <br>
                     до <input type="checkbox" id="price" name="price" value="5000.00"> 5000 руб. <br>
+                    до <input type="checkbox" id="price" name="price" value="7000.00"> 7000 руб. <br>
                     до <input type="checkbox" id="price" name="price" value="10000.00"> 10000 руб. <br>
                     до <input type="checkbox" id="price" name="price" value="15000.00"> 15000 руб. <br>
                     до <input type="checkbox" id="price" name="price" value="20000.00"> 20000 руб. <br>
-                    до <input type="checkbox" id="price" name="price" value="25000.00"> 25000 руб. <br>
-                    до <input type="checkbox" id="price" name="price" value="30000.00"> 30000 руб. <br>
+                    до <input type="checkbox" id="price" name="price" value="25000.00"> 25000 руб. <br> -->
+
+                    <li><label for="price">Цена</label></li>
+                  
+                    <div>
+                        <input type="radio" name="price" value="all" id="price" checked> Все цены<br>
+                        <input type="radio" name="price" value="3000-5000" id="price"> от 3000 до 5000 руб<br>
+                        <input type="radio" name="price" value="5000-7000" id="price"> от 5000 до 7000 руб<br>
+                        <input type="radio" name="price" value="7000-10000" id="price"> от 7000 до 10000 руб<br>
+                        <input type="radio" name="price" value="10000-15000" id="price"> от 10000 до 15000 руб<br>
+                        <input type="radio" name="price" value="15000-20000" id="price"> от 15000 до 20000 руб<br>
+                    </div>
                 </ul>
                 <ul>
                     <li><label for="ram">Оперативная память</label></li>
@@ -60,7 +71,7 @@
                 <ul>
                     <li><label for="ram">Встроенная память</label></li>
                     <input type="checkbox" id="hdd" name="hdd" value="8"> 8Gb
-                    <input type="checkbox" id="hdd" name="hdd" value="16"> 6GB
+                    <input type="checkbox" id="hdd" name="hdd" value="16"> 16GB
                     <input type="checkbox" id="hdd" name="hdd" value="32"> 32GB
                     <input type="checkbox" id="hdd" name="hdd" value="64"> 64Gb
                     <input type="checkbox" id="hdd" name="hdd" value="128"> 128Gb
@@ -82,11 +93,14 @@
                 </ul>
                 <ul>
                     <li><label for="ram">Емкость АКБ</label></li>
-                    <input type="checkbox" id="battery" name="battery" value="1000"> 1000 mA
-                    <input type="checkbox" id="battery" name="battery" value="2000"> 2000 mA <br>
-                    <input type="checkbox" id="battery" name="battery" value="3000"> 3000 mA
-                    <input type="checkbox" id="battery" name="battery" value="4000"> 4000 mA <br>
-                    <input type="checkbox" id="battery" name="battery" value="5000"> 5000 mA
+                    <div>
+                        <input type="radio" name="battery" value="all" id="battery" checked> Все <br>
+                        <input type="radio" name="battery" value="lower 2000" id="battery"> менее 2000 мА <br>
+                        <input type="radio" name="battery" value="2000-3000" id="battery"> от 2000 до 3000 мА<br>
+                        <input type="radio" name="battery" value="3000-5000" id="battery"> от 3000 до 5000 мА <br>
+                        <input type="radio" name="battery" value="10000-15000" id="battery"> от 5000 до 8000 мА <br>
+                       
+                    </div>
                 </ul>
                 <ul>
                     <li><label for="ram">Разрешение основной камеры</label></li>
