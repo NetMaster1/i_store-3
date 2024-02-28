@@ -27,7 +27,7 @@ SECRET_KEY = '9=mm!b69r4d+*5-p)xd_47ei6-np82s(9ba4&#6z+bulph!ojv'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1', '178.128.154.158', 'www.evvy.ru', 'evvy.ru']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '91.219.59.191', 'www.evvy.ru', 'evvy.ru']
 
 
 # Application definition
@@ -93,8 +93,8 @@ WSGI_APPLICATION = 'pr_dir.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'i_store_4',
-        'USER': 'postgres',
+        'NAME': 'evvy_db',
+        'USER': 'django_admin',
         'PASSWORD': 'ylhio65v',
         'HOST': 'localhost',
         'PORT': '5432'

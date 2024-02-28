@@ -214,7 +214,7 @@ def search_smartphone(request):
         if processor_frequency:  # if checked
             queryset_list = queryset_list.filter(processor_frequency__in=processor_frequency)
 
-     if 'battery' in request.GET: 
+    if 'battery' in request.GET: 
         option=request.GET['battery']
         if option == 'all':
             context = {
